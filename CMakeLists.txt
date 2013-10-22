@@ -24,6 +24,11 @@ set(CMAKE_RUNTIME_OUTPUT_DIRECTORY ${CMAKE_BINARY_DIR}/build)
 INCLUDE_DIRECTORIES(. source test ${PROJECT_SOURCE_DIR}/usr/local/include)
 LINK_DIRECTORIES(${PROJECT_SOURCE_DIR}/usr/local/lib)
 
+find_library(MODBUSLIB modbus PATHS ${PROJECT_SOURCE_DIR}/usr/local/lib /usr/lib,/usr/local/lib/modbus DOC "modbus library")
+if(NOT MODBUSLIB)
+    message(FATAL_ERROR "libmodbus not found")
+endif()
+
 ADD_DEFINITIONS(-g -O2 -Wall)
 
 
@@ -34,11 +39,11 @@ FILE(GLOB modbus_src source/*.cpp)
 
 ADD_LIBRARY(common_modbus SHARED ${modbus_src})
 IF(${CMAKE_SYSTEM_NAME} MATCHES "Linux")
-	TARGET_LINK_LIBRARIES(modbus pthread
+	TARGET_LINK_LIBRARIES(modbus ${MODBUSLIB} pthread
 	chaos_cutoolkit chaos_common boost_program_options
 			      boost_system)
 ELSE()
-	TARGET_LINK_LIBRARIES(common_modbus chaos_cutoolkit
+	TARGET_LINK_LIBRARIES(common_modbus ${MODBUSLIB} chaos_cutoolkit
 	chaos_common boost_program_options boost_system boost_thread
 	boost_chrono boost_regex boost_log boost_log_setup
 	boost_atomic memcached msgpack msgpack-rpc mpio)
@@ -50,9 +55,9 @@ FILE(GLOB modbus_test_src test/*.cpp)
 ADD_EXECUTABLE(test_modbus ${modbus_test_src})
 
 IF(${CMAKE_SYSTEM_NAME} MATCHES "Linux")
-	TARGET_LINK_LIBRARIES(test_modbus common_modbus pthread chaos_cutoolkit chaos_common boost_program_options boost_system boost_thread boost_chrono boost_regex boost_log boost_log_setup boost_atomic memcached msgpack msgpack-rpc mpio)
+	TARGET_LINK_LIBRARIES(test_modbus ${MODBUSLIB} common_modbus pthread chaos_cutoolkit chaos_common boost_program_options boost_system boost_thread boost_chrono boost_regex boost_log boost_log_setup boost_atomic memcached msgpack msgpack-rpc mpio)
 ELSE()
-	TARGET_LINK_LIBRARIES(test_modbus common_modbus chaos_cutoolkit chaos_common boost_program_options boost_system boost_thread boost_chrono boost_regex boost_log boost_log_setup boost_atomic memcached msgpack msgpack-rpc mpio)
+	TARGET_LINK_LIBRARIES(test_modbus ${MODBUSLIB} common_modbus chaos_cutoolkit chaos_common boost_program_options boost_system boost_thread boost_chrono boost_regex boost_log boost_log_setup boost_atomic memcached msgpack msgpack-rpc mpio)
 ENDIF()
 
 INSTALL_TARGETS(/bin  common_modbus)

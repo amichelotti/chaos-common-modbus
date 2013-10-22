@@ -1,33 +1,42 @@
-/*	
- *	modbus.h
- *	!CHAOS
- *	Created by automatically 
- *	
- *    	Copyright 2012 INFN, National Institute of Nuclear Physics
- *
- *    	Licensed under the Apache License, Version 2.0 (the "License");
- *    	you may not use this file except in compliance with the License.
- *    	You may obtain a copy of the License at
- *
- *    	http://www.apache.org/licenses/LICENSE-2.0
- *
- *    	Unless required by applicable law or agreed to in writing, software
- *    	distributed under the License is distributed on an "AS IS" BASIS,
- *    	WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
- *    	See the License for the specific language governing permissions and
- *    	limitations under the License.
- */
-#ifndef __common_modbus_h__
-#define __common_modbus_h__
+//
+//  ModBus.h
+//  CHAOS_SWPowerSupplyModbusDD
+//
+//  Created by andrea michelotti on 9/10/13.
+//
+// implementation of the modbus tcp/rtu clients
 
+#ifndef __CHAOS_SWPowerSupplyModbusDD__ModBusTcp__
+#define __CHAOS_SWPowerSupplyModbusDD__ModBusTcp__
 
-// include your class/functions headers here
+#include <iostream>
+#include "AbstractModbus.h"
+#include "ModBusWrapper.h"
+#include "LibModBusWrap.h"
+#include <string>
 
 namespace common {
-  namespace modbus {
-    // put your code here
+    namespace modbus{
+        
+        template<class MODBUSWRAPPER>
+        class ModBusTcpT:public ModBusWrapper<MODBUSWRAPPER>{
+        public:
+            ModBusTcpT(const char* _ip,int _port){ModBusWrapper<MODBUSWRAPPER>::init(_ip,_port);}
+            
+        };
+        
+        template<class MODBUSWRAPPER>
+        class ModBusRTUT:public ModBusWrapper<MODBUSWRAPPER>{
+        public:
+            ModBusRTUT(const char* serialdev,int baudrate,char parity,int bits,int stop){ModBusWrapper<MODBUSWRAPPER>::init(serialdev,baudrate,parity,bits,stop);}
+            
+        };
 
-  };
-};
+        
+        typedef ModBusTcpT<common::modbus::LibModBusWrap> ModBusTcp;
+        typedef ModBusRTUT<common::modbus::LibModBusWrap> ModBusRTU;
 
-#endif
+        
+    }
+}
+#endif /* defined(__CHAOS_SWPowerSupplyModbusDD__ModBusTcp__) */

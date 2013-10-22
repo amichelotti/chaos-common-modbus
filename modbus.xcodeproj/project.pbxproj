@@ -10,6 +10,12 @@
 		533EF90C17E9F2F7004094C6 /* modbus.h in Headers */ = {isa = PBXBuildFile; fileRef = 533EF90A17E9F2F7004094C6 /* modbus.h */; };
 		533EF90D17E9F2F7004094C6 /* modbus.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 533EF90B17E9F2F7004094C6 /* modbus.cpp */; };
 		533EF91D17E9F365004094C6 /* main.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 533EF91C17E9F365004094C6 /* main.cpp */; };
+		5348EA5917EC51480054D559 /* AbstractModbus.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 5348EA5317EC51480054D559 /* AbstractModbus.cpp */; };
+		5348EA5A17EC51480054D559 /* AbstractModbus.h in Headers */ = {isa = PBXBuildFile; fileRef = 5348EA5417EC51480054D559 /* AbstractModbus.h */; };
+		5348EA5B17EC51480054D559 /* LibModBusWrap.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 5348EA5517EC51480054D559 /* LibModBusWrap.cpp */; };
+		5348EA5C17EC51480054D559 /* LibModBusWrap.h in Headers */ = {isa = PBXBuildFile; fileRef = 5348EA5617EC51480054D559 /* LibModBusWrap.h */; };
+		5348EA5D17EC51480054D559 /* ModBusWrapper.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 5348EA5717EC51480054D559 /* ModBusWrapper.cpp */; };
+		5348EA5E17EC51480054D559 /* ModBusWrapper.h in Headers */ = {isa = PBXBuildFile; fileRef = 5348EA5817EC51480054D559 /* ModBusWrapper.h */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXCopyFilesBuildPhase section */
@@ -25,11 +31,17 @@
 /* End PBXCopyFilesBuildPhase section */
 
 /* Begin PBXFileReference section */
-		533EF90317E9F252004094C6 /* libcommon_modbus.dylib */ = {isa = PBXFileReference; explicitFileType = "compiled.mach-o.dylib"; includeInIndex = 0; path = "libcommon_modbus.dylib"; sourceTree = BUILT_PRODUCTS_DIR; };
+		533EF90317E9F252004094C6 /* libcommon_modbus.dylib */ = {isa = PBXFileReference; explicitFileType = "compiled.mach-o.dylib"; includeInIndex = 0; path = libcommon_modbus.dylib; sourceTree = BUILT_PRODUCTS_DIR; };
 		533EF90A17E9F2F7004094C6 /* modbus.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = modbus.h; path = source/modbus.h; sourceTree = "<group>"; };
 		533EF90B17E9F2F7004094C6 /* modbus.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; name = modbus.cpp; path = source/modbus.cpp; sourceTree = "<group>"; };
-		533EF91317E9F342004094C6 /* test_modbus */ = {isa = PBXFileReference; explicitFileType = "compiled.mach-o.executable"; includeInIndex = 0; path = "test_modbus"; sourceTree = BUILT_PRODUCTS_DIR; };
+		533EF91317E9F342004094C6 /* test_modbus */ = {isa = PBXFileReference; explicitFileType = "compiled.mach-o.executable"; includeInIndex = 0; path = test_modbus; sourceTree = BUILT_PRODUCTS_DIR; };
 		533EF91C17E9F365004094C6 /* main.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; name = main.cpp; path = test/main.cpp; sourceTree = "<group>"; };
+		5348EA5317EC51480054D559 /* AbstractModbus.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; name = AbstractModbus.cpp; path = source/AbstractModbus.cpp; sourceTree = "<group>"; };
+		5348EA5417EC51480054D559 /* AbstractModbus.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = AbstractModbus.h; path = source/AbstractModbus.h; sourceTree = "<group>"; };
+		5348EA5517EC51480054D559 /* LibModBusWrap.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; name = LibModBusWrap.cpp; path = source/LibModBusWrap.cpp; sourceTree = "<group>"; };
+		5348EA5617EC51480054D559 /* LibModBusWrap.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = LibModBusWrap.h; path = source/LibModBusWrap.h; sourceTree = "<group>"; };
+		5348EA5717EC51480054D559 /* ModBusWrapper.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; name = ModBusWrapper.cpp; path = source/ModBusWrapper.cpp; sourceTree = "<group>"; };
+		5348EA5817EC51480054D559 /* ModBusWrapper.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = ModBusWrapper.h; path = source/ModBusWrapper.h; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -71,10 +83,16 @@
 		533EF90E17E9F300004094C6 /* common_modbus */ = {
 			isa = PBXGroup;
 			children = (
+				5348EA5317EC51480054D559 /* AbstractModbus.cpp */,
+				5348EA5417EC51480054D559 /* AbstractModbus.h */,
+				5348EA5517EC51480054D559 /* LibModBusWrap.cpp */,
+				5348EA5617EC51480054D559 /* LibModBusWrap.h */,
+				5348EA5717EC51480054D559 /* ModBusWrapper.cpp */,
+				5348EA5817EC51480054D559 /* ModBusWrapper.h */,
 				533EF90A17E9F2F7004094C6 /* modbus.h */,
 				533EF90B17E9F2F7004094C6 /* modbus.cpp */,
 			);
-			name = "common_modbus";
+			name = common_modbus;
 			sourceTree = "<group>";
 		};
 		533EF91417E9F342004094C6 /* test_modbus */ = {
@@ -82,7 +100,7 @@
 			children = (
 				533EF91C17E9F365004094C6 /* main.cpp */,
 			);
-			name = "test_modbus";
+			name = test_modbus;
 			sourceTree = "<group>";
 		};
 /* End PBXGroup section */
@@ -93,6 +111,9 @@
 			buildActionMask = 2147483647;
 			files = (
 				533EF90C17E9F2F7004094C6 /* modbus.h in Headers */,
+				5348EA5A17EC51480054D559 /* AbstractModbus.h in Headers */,
+				5348EA5C17EC51480054D559 /* LibModBusWrap.h in Headers */,
+				5348EA5E17EC51480054D559 /* ModBusWrapper.h in Headers */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -111,8 +132,8 @@
 			);
 			dependencies = (
 			);
-			name = "common_modbus";
-			productName = "common_modbus";
+			name = common_modbus;
+			productName = common_modbus;
 			productReference = 533EF90317E9F252004094C6 /* libcommon_modbus.dylib */;
 			productType = "com.apple.product-type.library.dynamic";
 		};
@@ -128,8 +149,8 @@
 			);
 			dependencies = (
 			);
-			name = "test_modbus";
-			productName = "test_modbus";
+			name = test_modbus;
+			productName = test_modbus;
 			productReference = 533EF91317E9F342004094C6 /* test_modbus */;
 			productType = "com.apple.product-type.tool";
 		};
@@ -142,7 +163,7 @@
 				LastUpgradeCheck = 0460;
 				ORGANIZATIONNAME = "andrea michelotti";
 			};
-			buildConfigurationList = 533EF8FE17E9F252004094C6 /* Build configuration list for PBXProject "common_modbus" */;
+			buildConfigurationList = 533EF8FE17E9F252004094C6 /* Build configuration list for PBXProject "modbus" */;
 			compatibilityVersion = "Xcode 3.2";
 			developmentRegion = English;
 			hasScannedForEncodings = 0;
@@ -166,6 +187,9 @@
 			buildActionMask = 2147483647;
 			files = (
 				533EF90D17E9F2F7004094C6 /* modbus.cpp in Sources */,
+				5348EA5917EC51480054D559 /* AbstractModbus.cpp in Sources */,
+				5348EA5B17EC51480054D559 /* LibModBusWrap.cpp in Sources */,
+				5348EA5D17EC51480054D559 /* ModBusWrapper.cpp in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -252,6 +276,7 @@
 					"-lboost_filesystem",
 					"-lboost_log",
 					"-lboost_log_setup",
+					"-lmodbus",
 				);
 				PRODUCT_NAME = "$(TARGET_NAME)";
 			};
@@ -272,6 +297,7 @@
 					"-lboost_filesystem",
 					"-lboost_log",
 					"-lboost_log_setup",
+					"-lmodbus",
 				);
 				PRODUCT_NAME = "$(TARGET_NAME)";
 			};
@@ -322,7 +348,7 @@
 /* End XCBuildConfiguration section */
 
 /* Begin XCConfigurationList section */
-		533EF8FE17E9F252004094C6 /* Build configuration list for PBXProject "common_modbus" */ = {
+		533EF8FE17E9F252004094C6 /* Build configuration list for PBXProject "modbus" */ = {
 			isa = XCConfigurationList;
 			buildConfigurations = (
 				533EF90517E9F252004094C6 /* Debug */,
@@ -338,6 +364,7 @@
 				533EF90917E9F252004094C6 /* Release */,
 			);
 			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
 		};
 		533EF91917E9F342004094C6 /* Build configuration list for PBXNativeTarget "test_modbus" */ = {
 			isa = XCConfigurationList;
@@ -346,6 +373,7 @@
 				533EF91B17E9F342004094C6 /* Release */,
 			);
 			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
 		};
 /* End XCConfigurationList section */
 	};
