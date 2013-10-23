@@ -10,8 +10,8 @@
 #define __CHAOS_SWPowerSupplyModbusDD__LibModBusWrap__
 
 #include <iostream>
-#include "AbstractModbus.h"
-#include "ModBusWrapper.h"
+#include "common/modbus/core/ModBusWrapper.h"
+
 extern "C" {
 #include "modbus/modbus.h"
 };

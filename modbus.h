@@ -10,9 +10,9 @@
 #define __CHAOS_SWPowerSupplyModbusDD__ModBusTcp__
 
 #include <iostream>
-#include "AbstractModbus.h"
-#include "ModBusWrapper.h"
-#include "LibModBusWrap.h"
+#include "common/modbus/core/AbstractModbus.h"
+#include "common/modbus/core/ModBusWrapper.h"
+#include "common/modbus/core/LibModBusWrap.h"
 #include <string>
 
 namespace common {
