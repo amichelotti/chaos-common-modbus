@@ -1,4 +1,4 @@
-cmake_minimum_required(VERSION 2.8)
+cmake_minimum_required(VERSION 2.6)
 option(BUILD_FORCE_32 "Set to ON to enable 32 bit compilation" OFF)
 
 
@@ -38,27 +38,14 @@ FILE(GLOB modbus_src core/*.cpp)
 ###
 
 ADD_LIBRARY(common_modbus SHARED ${modbus_src})
-IF(${CMAKE_SYSTEM_NAME} MATCHES "Linux")
-	TARGET_LINK_LIBRARIES(modbus ${MODBUSLIB} pthread
-	chaos_cutoolkit chaos_common boost_program_options
-			      boost_system)
-ELSE()
-	TARGET_LINK_LIBRARIES(common_modbus ${MODBUSLIB} chaos_cutoolkit
-	chaos_common boost_program_options boost_system boost_thread
-	boost_chrono boost_regex boost_log boost_log_setup
-	boost_atomic memcached msgpack msgpack-rpc mpio)
+TARGET_LINK_LIBRARIES(common_modbus ${MODBUSLIB} pthread)
 
-ENDIF()
 ## gets all sources in test, a main function must be present
 FILE(GLOB modbus_test_src test/*.cpp)
 ###
 ADD_EXECUTABLE(test_modbus ${modbus_test_src})
 
-IF(${CMAKE_SYSTEM_NAME} MATCHES "Linux")
-	TARGET_LINK_LIBRARIES(test_modbus ${MODBUSLIB} common_modbus pthread chaos_cutoolkit chaos_common boost_program_options boost_system boost_thread boost_chrono boost_regex boost_log boost_log_setup boost_atomic memcached msgpack msgpack-rpc mpio)
-ELSE()
-	TARGET_LINK_LIBRARIES(test_modbus ${MODBUSLIB} common_modbus chaos_cutoolkit chaos_common boost_program_options boost_system boost_thread boost_chrono boost_regex boost_log boost_log_setup boost_atomic memcached msgpack msgpack-rpc mpio)
-ENDIF()
+TARGET_LINK_LIBRARIES(test_modbus ${MODBUSLIB} common_modbus pthread boost_program_options boost_regex)
 
-INSTALL_TARGETS(/bin  common_modbus)
+INSTALL_TARGETS(/lib  common_modbus)
 INSTALL_TARGETS(/bin test_modbus)

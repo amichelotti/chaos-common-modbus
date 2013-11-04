@@ -20,9 +20,9 @@ namespace common{
             ModBusWrapper(){}
             ~ModBusWrapper(){static_cast<WRAPPER*>(this)->deinit();}
 
-            int init(const char* ip,int port) {static_cast<WRAPPER*>(this)->init(ip,port);};
-            int init(const char* serialdev,int baudrate,char parity,int bits,int stop){static_cast<WRAPPER*>(this)->init(serialdev,baudrate,parity,bits,stop);}
-            int deinit(){static_cast<WRAPPER*>(this)->deinit();}
+            int init(const char* ip,int port) {return static_cast<WRAPPER*>(this)->init(ip,port);};
+            int init(const char* serialdev,int baudrate,char parity,int bits,int stop){ return static_cast<WRAPPER*>(this)->init(serialdev,baudrate,parity,bits,stop);}
+            int deinit(){return static_cast<WRAPPER*>(this)->deinit();}
             
             bool connect(void){return static_cast<WRAPPER*>(this)->connect();}
             int flush(void){return static_cast<WRAPPER*>(this)->flush();}

@@ -10,7 +10,7 @@
 #define __CHAOS_SWPowerSupplyModbusDD__AbstractModbus__
 
 #include <iostream>
-
+#include <stdint.h>
 namespace common {
     namespace modbus {
         
