@@ -21,7 +21,7 @@ set(CMAKE_ARCHIVE_OUTPUT_DIRECTORY ${CMAKE_BINARY_DIR}/build)
 set(CMAKE_LIBRARY_OUTPUT_DIRECTORY ${CMAKE_BINARY_DIR}/build)
 set(CMAKE_RUNTIME_OUTPUT_DIRECTORY ${CMAKE_BINARY_DIR}/build)
      
-INCLUDE_DIRECTORIES(. source test ${PROJECT_SOURCE_DIR}/usr/local/include)
+INCLUDE_DIRECTORIES(../../ source test ${PROJECT_SOURCE_DIR}/usr/local/include)
 LINK_DIRECTORIES(${PROJECT_SOURCE_DIR}/usr/local/lib)
 
 find_library(MODBUSLIB modbus PATHS ${PROJECT_SOURCE_DIR}/usr/local/lib /usr/lib,/usr/local/lib/modbus DOC "modbus library")
@@ -34,7 +34,7 @@ ADD_DEFINITIONS(-g -O2 -Wall)
 
 #### put your libcommon_modbus LIBRARY source
 ### files in source
-FILE(GLOB modbus_src source/*.cpp)
+FILE(GLOB modbus_src core/*.cpp)
 ###
 
 ADD_LIBRARY(common_modbus SHARED ${modbus_src})

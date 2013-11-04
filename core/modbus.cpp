@@ -18,6 +18,6 @@
  *    	limitations under the License.
  */
 
-#include "modbus.h"
+#include "common/modbus/modbus.h"
 
 using namespace common::modbus;

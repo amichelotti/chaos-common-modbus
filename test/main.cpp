@@ -7,7 +7,6 @@
 //
 
 #include <iostream>
-#include "Modbus.h"
 #include <boost/program_options.hpp>
 #include <boost/regex.hpp>
 #include "common/modbus/modbus.h"

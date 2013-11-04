@@ -88,34 +88,35 @@ namespace common {
             return 0;
         }
         void LibModBusWrap::set_write_timeo(uint32_t us){
-            struct timeval tm;
-            tm.tv_sec=0;
-            tm.tv_usec=us;
-            if(us==0){
+           // struct timeval tm;
+            //tm.tv_sec=0;
+            //tm.tv_usec=us;
+            /*if(us==0){
                 // no timeout
                 tm.tv_sec=-1;
-            }
-            modbus_set_byte_timeout(ctx, &tm);
+            }*/
+            modbus_set_byte_timeout(ctx, 0,us);
         }
         void LibModBusWrap::set_read_timeo(uint32_t us){
-            struct timeval tm;
-            tm.tv_sec=0;
-            tm.tv_usec=us;
-            if(us==0){
+           // struct timeval tm;
+           // tm.tv_sec=0;
+           // tm.tv_usec=us;
+          /*  if(us==0){
                 // no timeout
                 tm.tv_sec=-1;
-            }
-            modbus_set_response_timeout(ctx, &tm);
+            }*/
+            modbus_set_response_timeout(ctx, 0,us);
         }
         uint32_t LibModBusWrap::get_write_timeo(){
-            struct timeval tm;
-            modbus_get_byte_timeout(ctx, &tm);
-            return tm.tv_usec;
+            long tms,tmu;
+            modbus_get_byte_timeout(ctx, &tms,&tmu);
+            return tmu;
         }
         uint32_t LibModBusWrap::get_read_timeo(){
-            struct timeval tm;
-            modbus_get_response_timeout(ctx, &tm);
-            return tm.tv_usec;
+            //struct timeval tm;
+            long tms,tmu;
+            modbus_get_response_timeout(ctx, &tms,&tmu);
+            return tmu;
         }
         
         int LibModBusWrap::read_coil_status(int addr,int nb, uint8_t*dest,int slave_id){
