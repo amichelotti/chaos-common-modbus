@@ -11,7 +11,6 @@
 
 #include <iostream>
 #include "common/modbus/core/AbstractModbus.h"
-#include "common/modbus/core/ModBusWrapper.h"
 #include "common/modbus/core/LibModBusWrap.h"
 #include <string>
 
@@ -19,16 +18,16 @@ namespace common {
     namespace modbus{
         
         template<class MODBUSWRAPPER>
-        class ModBusTcpT:public ModBusWrapper<MODBUSWRAPPER>{
+        class ModBusTcpT:public MODBUSWRAPPER {
         public:
-            ModBusTcpT(const char* _ip,int _port){ModBusWrapper<MODBUSWRAPPER>::init(_ip,_port);}
+            ModBusTcpT(const char* _ip,int _port):MODBUSWRAPPER(_ip,_port){}
             
         };
         
         template<class MODBUSWRAPPER>
-        class ModBusRTUT:public ModBusWrapper<MODBUSWRAPPER>{
+        class ModBusRTUT:public MODBUSWRAPPER {
         public:
-            ModBusRTUT(const char* serialdev,int baudrate,char parity,int bits,int stop){ModBusWrapper<MODBUSWRAPPER>::init(serialdev,baudrate,parity,bits,stop);}
+            ModBusRTUT(const char* serialdev,int baudrate,char parity,int bits,int stop):MODBUSWRAPPER(serialdev,baudrate,parity,bits,stop){}
             
         };
 

@@ -17,7 +17,7 @@
 
 static const boost::regex litteral_ip_port("([0-9a-zA-Z]+\\.[0-9a-zA-Z]+\\.[0-9a-zA-Z]+\\.[0-9a-zA-Z]+):([0-9]+)");
 // serial_device,baudrate,parity,bits,stop
-static const boost::regex serial_parameter("([[::word::]\\/]+):([0-9]+):([EO]):([78]):([01])");
+static const boost::regex serial_parameter("([[\\w]\\/]+):([0-9]+):([EO]):([78]):([01])");
 #define USAGE \
  std::cout<<"Usage:"<<argv[0]<<" --mc <communication channel [ip:port or /dev/ttySxx,baudrate:parity:bits:stop]>"<<std::endl;
 using namespace std;
@@ -33,10 +33,13 @@ unsigned long int getData(const char*what){
 }
 int main(int argc, const char * argv[])
 {
+    int slave =-1;
 
     boost::program_options::options_description desc("options");
     desc.add_options()("help","help");
     desc.add_options()("mc",boost::program_options::value<std::string>(),"modbus client");
+    desc.add_options()("sv,slave",boost::program_options::value<int>(),"modbus slave");
+
     boost::program_options::variables_map vm;
     boost::program_options::store(boost::program_options::parse_command_line(argc,argv, desc),vm);
     boost::program_options::notify(vm);
@@ -45,7 +48,7 @@ int main(int argc, const char * argv[])
     boost::smatch match;
     int modbusrtu=0;
     if(vm.count("help")){
-        USAGE;
+        cout<<"Usage:"<<desc<<endl;
         return 0;
     }
     if(vm.count("mc")){
@@ -55,6 +58,10 @@ int main(int argc, const char * argv[])
     }
     
     parameters = vm["mc"].as<std::string>();
+    if(vm.count("sv")){
+        slave = vm["sv"].as<int>();
+    }
+    
     if(regex_match(parameters,match,litteral_ip_port)){
         std::string ip = match[1];
         std::string port = match[2];
@@ -81,7 +88,6 @@ int main(int argc, const char * argv[])
     
     while(1){
         int ch;
-        int slave =-1;
         printf("\n1] write register \n");
         printf("2] read register \n");
         printf("3] quit \n");
@@ -98,7 +104,7 @@ int main(int argc, const char * argv[])
             unsigned long address;
             uint16_t data;
             address = getData("read address");
-            modbus_drv->read_input_registers(address,1,&data);
+            modbus_drv->read_input_registers(address,1,&data,slave);
             printf("->0x%x(%d)\n",data,data);
         } else {
             break;

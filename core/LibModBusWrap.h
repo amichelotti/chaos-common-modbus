@@ -19,7 +19,7 @@ extern "C" {
 namespace common{
     namespace modbus {
         
-        class LibModBusWrap:public ModBusWrapper<LibModBusWrap> {
+        class LibModBusWrap:public AbstractModbus {
             
         private:
             uint8_t *tab_rp_bits;
