@@ -90,7 +90,9 @@ int main(int argc, const char * argv[])
         int ch;
         printf("\n1] write register \n");
         printf("2] read register \n");
-        printf("3] quit \n");
+        printf("3] read32 register \n");
+
+        printf("q] quit \n");
         ch = getchar();
         if(modbusrtu){
             slave = getData("slave address");
@@ -106,6 +108,14 @@ int main(int argc, const char * argv[])
             address = getData("read address");
             modbus_drv->read_input_registers(address,1,&data,slave);
             printf("->0x%x(%d)\n",data,data);
+        } else if(ch=='3'){
+            unsigned long address;
+            uint32_t data;
+            float* dataf=(float*)&data;
+            address = getData("read32 address");
+            modbus_drv->read_input_registers(address+1,2,(uint16_t*)&data,slave);
+            
+            printf("->0x%x(%d) %f\n",data,data,*dataf);
         } else {
             break;
         }
