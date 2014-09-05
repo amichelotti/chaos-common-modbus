@@ -38,7 +38,7 @@ FILE(GLOB modbus_src core/*.cpp)
 ###
 
 ADD_LIBRARY(common_modbus SHARED ${modbus_src})
-TARGET_LINK_LIBRARIES(common_modbus ${MODBUSLIB} boost_system chaos_cutoolkit pthread)
+TARGET_LINK_LIBRARIES(common_modbus ${MODBUSLIB}  pthread)
 
 ## gets all sources in test, a main function must be present
 FILE(GLOB modbus_test_src test/*.cpp)
