@@ -49,3 +49,6 @@ TARGET_LINK_LIBRARIES(test_modbus ${MODBUSLIB} common_modbus pthread boost_progr
 
 INSTALL_TARGETS(/lib  common_modbus)
 INSTALL_TARGETS(/bin test_modbus)
+FILE(GLOB headers "core/*.h")
+INSTALL(FILES modbus.h DESTINATION include/common/modbus)
+INSTALL(FILES ${headers} DESTINATION include/common/modbus/core)
