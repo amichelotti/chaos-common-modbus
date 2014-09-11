@@ -6,8 +6,8 @@
 //
 // base class for modbus clients 
 
-#ifndef __CHAOS_SWPowerSupplyModbusDD__AbstractModbus__
-#define __CHAOS_SWPowerSupplyModbusDD__AbstractModbus__
+#ifndef __CHAOS_AbstractModbus__
+#define __CHAOS_AbstractModbus__
 
 #include <iostream>
 #include <stdint.h>
@@ -26,6 +26,12 @@ namespace common {
         public:
             AbstractModbus(){};
             virtual ~AbstractModbus(){};
+            
+            /**
+             initialization connection parameters
+             @param 
+             */
+            virtual int init(std::string)=0;
             /**
              connect to a target modbus device
              @return true on success
@@ -230,4 +236,4 @@ namespace common {
         };
     };
 };
-#endif /* defined(__CHAOS_SWPowerSupplyModbusDD__AbstractModbus__) */
+#endif 

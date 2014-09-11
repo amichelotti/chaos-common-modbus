@@ -14,8 +14,6 @@
 		5303A91B181883A90070356D /* modbus.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 5303A913181883A90070356D /* modbus.cpp */; };
 		5303A920181883BA0070356D /* modbus.h in Headers */ = {isa = PBXBuildFile; fileRef = 5303A91F181883BA0070356D /* modbus.h */; settings = {ATTRIBUTES = (Public, ); }; };
 		533EF91D17E9F365004094C6 /* main.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 533EF91C17E9F365004094C6 /* main.cpp */; };
-		53ADBB3619B73CC50031516E /* ChaosModbusInterface.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 53ADBB3419B73CC50031516E /* ChaosModbusInterface.cpp */; };
-		53ADBB3719B73CC50031516E /* ChaosModbusInterface.h in Headers */ = {isa = PBXBuildFile; fileRef = 53ADBB3519B73CC50031516E /* ChaosModbusInterface.h */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -50,8 +48,6 @@
 		533EF90317E9F252004094C6 /* libcommon_modbus.dylib */ = {isa = PBXFileReference; explicitFileType = "compiled.mach-o.dylib"; includeInIndex = 0; path = libcommon_modbus.dylib; sourceTree = BUILT_PRODUCTS_DIR; };
 		533EF91317E9F342004094C6 /* test_modbus */ = {isa = PBXFileReference; explicitFileType = "compiled.mach-o.executable"; includeInIndex = 0; path = test_modbus; sourceTree = BUILT_PRODUCTS_DIR; };
 		533EF91C17E9F365004094C6 /* main.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; name = main.cpp; path = test/main.cpp; sourceTree = "<group>"; };
-		53ADBB3419B73CC50031516E /* ChaosModbusInterface.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = ChaosModbusInterface.cpp; sourceTree = "<group>"; };
-		53ADBB3519B73CC50031516E /* ChaosModbusInterface.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ChaosModbusInterface.h; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -80,8 +76,6 @@
 				5303A911181883A90070356D /* LibModBusWrap.cpp */,
 				5303A912181883A90070356D /* LibModBusWrap.h */,
 				5303A913181883A90070356D /* modbus.cpp */,
-				53ADBB3419B73CC50031516E /* ChaosModbusInterface.cpp */,
-				53ADBB3519B73CC50031516E /* ChaosModbusInterface.h */,
 			);
 			path = core;
 			sourceTree = "<group>";
@@ -129,7 +123,6 @@
 			buildActionMask = 2147483647;
 			files = (
 				5303A920181883BA0070356D /* modbus.h in Headers */,
-				53ADBB3719B73CC50031516E /* ChaosModbusInterface.h in Headers */,
 				5303A91A181883A90070356D /* LibModBusWrap.h in Headers */,
 				5303A918181883A90070356D /* AbstractModbus.h in Headers */,
 			);
@@ -207,7 +200,6 @@
 			files = (
 				5303A917181883A90070356D /* AbstractModbus.cpp in Sources */,
 				5303A91B181883A90070356D /* modbus.cpp in Sources */,
-				53ADBB3619B73CC50031516E /* ChaosModbusInterface.cpp in Sources */,
 				5303A919181883A90070356D /* LibModBusWrap.cpp in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
@@ -303,7 +295,7 @@
 		533EF90817E9F252004094C6 /* Debug */ = {
 			isa = XCBuildConfiguration;
 			buildSettings = {
-				ARCHS = "$(ARCHS_STANDARD_32_64_BIT)";
+				ARCHS = "$(ARCHS_STANDARD)";
 				CLANG_CXX_LANGUAGE_STANDARD = "compiler-default";
 				CLANG_CXX_LIBRARY = "libstdc++";
 				DEPLOYMENT_LOCATION = YES;
@@ -320,6 +312,7 @@
 					"-lmodbus",
 					"-lchaos_cutoolkit",
 					"-lboost_system",
+					"-lboost_regex",
 				);
 				PRIVATE_HEADERS_FOLDER_PATH = "$(SRCROOT)/../../usr/local/include/common/modbus/core";
 				PRODUCT_NAME = "$(TARGET_NAME)";
@@ -330,7 +323,7 @@
 		533EF90917E9F252004094C6 /* Release */ = {
 			isa = XCBuildConfiguration;
 			buildSettings = {
-				ARCHS = "$(ARCHS_STANDARD_32_64_BIT)";
+				ARCHS = "$(ARCHS_STANDARD)";
 				CLANG_CXX_LANGUAGE_STANDARD = "compiler-default";
 				CLANG_CXX_LIBRARY = "libstdc++";
 				DEPLOYMENT_LOCATION = YES;
@@ -347,6 +340,7 @@
 					"-lmodbus",
 					"-lchaos_cutoolkit",
 					"-lboost_system",
+					"-lboost_regex",
 				);
 				PRIVATE_HEADERS_FOLDER_PATH = "$(SRCROOT)/../../usr/local/include/common/modbus/core";
 				PRODUCT_NAME = "$(TARGET_NAME)";

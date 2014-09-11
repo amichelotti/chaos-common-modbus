@@ -6,16 +6,19 @@
 //
 // implementation of the modbus tcp/rtu clients
 
-#ifndef __CHAOS_SWPowerSupplyModbusDD__ModBusTcp__
-#define __CHAOS_SWPowerSupplyModbusDD__ModBusTcp__
+#ifndef __COMMON_MODBUS_H__
+#define __COMMON_MODBUS_H__
 
 #include <iostream>
 #include "common/modbus/core/AbstractModbus.h"
 #include "common/modbus/core/LibModBusWrap.h"
+#include <chaos/common/utility/SingletonOnArguments.h>
 #include <string>
+#include <boost/regex.hpp>
 
 namespace common {
     namespace modbus{
+      
         
         template<class MODBUSWRAPPER>
         class ModBusTcpT:public MODBUSWRAPPER {
@@ -30,10 +33,23 @@ namespace common {
             ModBusRTUT(const char* serialdev,int baudrate,char parity,int bits,int stop):MODBUSWRAPPER(serialdev,baudrate,parity,bits,stop){}
             
         };
-
         
-        typedef ModBusTcpT<common::modbus::LibModBusWrap> ModBusTcp;
-        typedef ModBusRTUT<common::modbus::LibModBusWrap> ModBusRTU;
+        template<class MODBUSWRAPPER>
+        class ModBus:public MODBUSWRAPPER, public chaos::SingletonOnArguments<ModBus<MODBUSWRAPPER> >{
+            
+        protected:
+            int callInit(std::string initialisation){return static_cast<MODBUSWRAPPER*>(this)->init(initialisation);}
+
+        public:
+            ModBus(){};
+           
+
+            
+        };
+        
+        typedef ModBusTcpT< ::common::modbus::LibModBusWrap> ModBusTcp;
+        typedef ModBusRTUT< ::common::modbus::LibModBusWrap> ModBusRTU;
+        typedef ModBus< ::common::modbus::LibModBusWrap> ModBusDrv;
 
         
     }

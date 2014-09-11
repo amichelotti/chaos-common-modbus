@@ -18,7 +18,7 @@ extern "C" {
 
 namespace common{
     namespace modbus {
-        
+               
         class LibModBusWrap:public AbstractModbus {
             
         private:
@@ -27,6 +27,7 @@ namespace common{
             uint16_t *tab_rp_registers_bad;
             modbus_t *ctx;
         public:
+            LibModBusWrap(){}
             // tcp
             LibModBusWrap(const char* ip,int port);
             //serial
@@ -34,6 +35,7 @@ namespace common{
             ~LibModBusWrap();
             int init(const char* ip,int port);
             int init(const char* serialdev,int baudrate,char parity,int bits,int stop);
+            int init(std::string initialization);
             int deinit();
             bool connect(void);
             int flush(void);

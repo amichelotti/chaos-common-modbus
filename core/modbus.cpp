@@ -19,5 +19,5 @@
  */
 
 #include "common/modbus/modbus.h"
-
+#include <stdlib.h>
 using namespace common::modbus;

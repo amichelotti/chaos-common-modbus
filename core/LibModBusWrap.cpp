@@ -10,6 +10,10 @@
 #include <stdio.h>
 #include <errno.h>
 #include <string>
+#include <boost/regex.hpp>
+static const boost::regex modbusTcp("(\\w+):(.+)");
+static const boost::regex modbusRTU("([[\\w]\\/]+):([0-9]+):([EO]):([78]):([01])");
+
 // tcp
 namespace common {
     
@@ -36,8 +40,9 @@ namespace common {
                 fprintf(stderr, "Unable to allocate libmodbus [TCP] context\n");
                 return -1;
             }
+#ifdef DEBUG
             modbus_set_debug(ctx, TRUE);
-            
+#endif
             return 1;
         };
         
@@ -50,9 +55,30 @@ namespace common {
                 fprintf(stderr, "Unable to allocate libmodbus [TCP] context\n");
                 return -1;
             }
+#ifdef DEBUG
             modbus_set_debug(ctx, TRUE);
-            
+#endif
             return 1;
+        }
+        
+        int LibModBusWrap::init(std::string _init){
+          boost::smatch match;
+            if(regex_match(_init,match,modbusTcp,boost::match_extra)){
+                std::string ip,port;
+                ip = match[1];
+                port =match[2];
+                return init(ip.c_str(),atoi(port.c_str()));
+                
+            } else if(regex_match(_init,match,modbusRTU,boost::match_extra)){
+                std::string dev,baudrate,parity,bits,stop;
+                dev = match[1];
+                baudrate = match[2];
+                parity = match[3];
+                bits =match[4];
+                stop = match[5];
+                return init(dev.c_str(),::atoi(baudrate.c_str()),atoi(parity.c_str()),atoi(bits.c_str()),atoi(stop.c_str()));
+            }
+            return -3;
         }
         
         int LibModBusWrap::deinit(){
