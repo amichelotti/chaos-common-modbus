@@ -10,21 +10,19 @@
 #define __CHAOS_SWPowerSupplyModbusDD__LibModBusWrap__
 
 #include <iostream>
-#include "common/modbus/core/ModBusWrapper.h"
+
 
 extern "C" {
 #include "modbus/modbus.h"
 };
-
+#include "common/modbus/core/AbstractModbus.h"
 namespace common{
     namespace modbus {
                
         class LibModBusWrap:public AbstractModbus {
             
         private:
-            uint8_t *tab_rp_bits;
-            uint16_t *tab_rp_registers;
-            uint16_t *tab_rp_registers_bad;
+
             modbus_t *ctx;
         public:
             LibModBusWrap(){}
