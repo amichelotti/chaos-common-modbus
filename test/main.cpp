@@ -113,9 +113,9 @@ int main(int argc, const char * argv[])
             uint32_t data;
             float* dataf=(float*)&data;
             address = getData("read32 address");
-            modbus_drv->read_input_registers(address+1,2,(uint16_t*)&data,slave);
+            modbus_drv->read_input_registers(address,2,(uint16_t*)&data,slave);
             
-            printf("->0x%x(%d) %f\n",data,data,*dataf);
+            printf("->0x%x(%d) float:%f\n",data,data,*dataf);
         } else {
             break;
         }

@@ -25,7 +25,7 @@ namespace common{
 
             modbus_t *ctx;
         public:
-            LibModBusWrap(){}
+            LibModBusWrap(){ctx=0;}
             // tcp
             LibModBusWrap(const char* ip,int port);
             //serial

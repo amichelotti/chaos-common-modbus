@@ -11,7 +11,7 @@
 #include <errno.h>
 #include <string>
 #include <boost/regex.hpp>
-static const boost::regex modbusTcp("(\\w+):(.+)");
+static const boost::regex modbusTcp("(.+):(.+)");
 static const boost::regex modbusRTU("([[\\w]\\/]+):([0-9]+):([EO]):([78]):([01])");
 
 // tcp
