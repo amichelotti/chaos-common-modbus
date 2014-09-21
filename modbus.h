@@ -43,7 +43,9 @@ namespace common {
         public:
             ModBus(){};
            
-
+            ~ModBus(){
+            
+            }
             
         };
         

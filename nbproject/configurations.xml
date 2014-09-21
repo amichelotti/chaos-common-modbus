@@ -38,7 +38,7 @@
           <buildCommandWorkingDir>.</buildCommandWorkingDir>
           <buildCommand>${MAKE} -f Makefile</buildCommand>
           <cleanCommand>${MAKE} -f Makefile clean</cleanCommand>
-          <executablePath></executablePath>
+          <executablePath>CMakeFiles/CMakeDetermineCompilerABI_CXX.bin</executablePath>
           <ccTool>
             <incDir>
               <pElem>../..</pElem>
