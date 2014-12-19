@@ -5,21 +5,19 @@
       <df name="build">
       </df>
       <df name="CMakeFiles">
-        <df name="CMakeTmp">
-          <df name="CMakeFiles">
-            <df name="cmTryCompileExec.dir">
-            </df>
+        <df name="2.8.12.2">
+          <df name="CompilerIdC">
+            <in>CMakeCCompilerId.c</in>
           </df>
+          <df name="CompilerIdCXX">
+            <in>CMakeCXXCompilerId.cpp</in>
+          </df>
+        </df>
+        <df name="CMakeTmp">
         </df>
         <df name="common_modbus.dir">
           <df name="core">
           </df>
-        </df>
-        <df name="CompilerIdC">
-          <in>CMakeCCompilerId.c</in>
-        </df>
-        <df name="CompilerIdCXX">
-          <in>CMakeCXXCompilerId.cpp</in>
         </df>
         <df name="test_modbus.dir">
           <df name="test">
@@ -68,8 +66,6 @@
         <gdb_interceptlist>
           <gdbinterceptoptions gdb_all="false" gdb_unhandled="true" gdb_unexpected="true"/>
         </gdb_interceptlist>
-        <gdb_signals>
-        </gdb_signals>
         <gdb_options>
           <DebugOptions>
           </DebugOptions>
