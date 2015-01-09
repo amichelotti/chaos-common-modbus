@@ -25,5 +25,8 @@
             <file>file:/home/chaos/chaos_bundle_cnaf/common/modbus/core/LibModBusWrap.cpp</file>
             <file>file:/home/chaos/chaos_bundle_cnaf/common/modbus/test/main.cpp</file>
         </group>
+        <group name="CHAOS DRIVER">
+            <file>file:/home/michelo/chaos_bundle/common/modbus/core/LibModBusWrap.cpp</file>
+        </group>
     </open-files>
 </project-private>
