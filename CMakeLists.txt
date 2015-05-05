@@ -26,7 +26,7 @@ FILE(GLOB modbus_test_src test/*.cpp)
 ###
 ADD_EXECUTABLE(test_modbus ${modbus_test_src})
 
-TARGET_LINK_LIBRARIES(test_modbus ${MODBUSLIB} common_modbus pthread boost_program_options boost_regex)
+TARGET_LINK_LIBRARIES(test_modbus ${MODBUSLIB} common_modbus pthread boost_program_options boost_regex boost_atomic)
 
 INSTALL_TARGETS(/lib  common_modbus)
 INSTALL_TARGETS(/bin test_modbus)
