@@ -10,6 +10,12 @@ endif()
 ### files in source
 FILE(GLOB modbus_src core/*.cpp)
 ###
+IF(FrameworkLib)
+SET(libs chaos_common ${FrameworkLib})
+ELSE()
+SET(libs pthread boost_regex boost_system)
+ENDIF()
+
 IF(BUILD_FORCE_STATIC)
 ADD_LIBRARY(common_modbus STATIC ${modbus_src})
 ELSE()
@@ -19,14 +25,14 @@ ENDIF()
 
 
 # set_target_properties(common_modbus_static PROPERTIES output_name common_modbus)
-TARGET_LINK_LIBRARIES(common_modbus ${MODBUSLIB}  pthread boost_regex boost_system)
+TARGET_LINK_LIBRARIES(common_modbus ${MODBUSLIB}  ${libs})
 
 ## gets all sources in test, a main function must be present
 FILE(GLOB modbus_test_src test/*.cpp)
 ###
 ADD_EXECUTABLE(test_modbus ${modbus_test_src})
 
-TARGET_LINK_LIBRARIES(test_modbus ${MODBUSLIB} common_modbus pthread boost_program_options boost_regex boost_atomic)
+TARGET_LINK_LIBRARIES(test_modbus ${MODBUSLIB} common_modbus ${libs})
 
 INSTALL_TARGETS(/lib  common_modbus)
 INSTALL_TARGETS(/bin test_modbus)
