@@ -17,9 +17,7 @@
 #include <boost/regex.hpp>
 
 namespace common {
-    namespace modbus{
-
-
+  namespace modbus {
         template<class MODBUSWRAPPER>
         class ModBusTcpT:public MODBUSWRAPPER {
         public:
@@ -54,6 +52,6 @@ namespace common {
         typedef ModBus< ::common::modbus::LibModBusWrap> ModBusDrv;
 
 
-    }
+  }
 }
 #endif /* defined(__CHAOS_SWPowerSupplyModbusDD__ModBusTcp__) */

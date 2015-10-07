@@ -8,7 +8,7 @@ ELSE()
   ELSE()
     MESSAGE(STATUS "install prefix ${CMAKE_INSTALL_PREFIX}")
   ENDIF()
-  INCLUDE_DIRECTORIES(. ../..)
+  INCLUDE_DIRECTORIES(. ../.. ${CMAKE_INSTALL_PREFIX}/include)
   LINK_DIRECTORIES(${CMAKE_BINARY_DIR}/build ${CMAKE_INSTALL_PREFIX}/lib)
 ENDIF()
 
@@ -45,7 +45,7 @@ FILE(GLOB modbus_test_src test/*.cpp)
 ###
 ADD_EXECUTABLE(test_modbus ${modbus_test_src})
 
-TARGET_LINK_LIBRARIES(test_modbus ${MODBUSLIB} common_modbus ${libs})
+TARGET_LINK_LIBRARIES(test_modbus ${MODBUSLIB} common_modbus ${libs} -lboost_regex -lboost_program_options)
 
 INSTALL_TARGETS(/lib  common_modbus)
 INSTALL_TARGETS(/bin test_modbus)
