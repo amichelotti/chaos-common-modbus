@@ -117,20 +117,26 @@ namespace common {
         void LibModBusWrap::set_write_timeo(uint32_t us){
             struct timeval tm;
             tm.tv_sec=0;
-            tm.tv_usec=us;
+            tm.tv_usec=0;
             if(us==0){
                 // no timeout
                 tm.tv_sec=-1;
+            } else {
+                tm.tv_sec=us/1000000;
+                tm.tv_usec=us%1000000;
             }
             modbus_set_byte_timeout(ctx, &tm);
         }
         void LibModBusWrap::set_read_timeo(uint32_t us){
             struct timeval tm;
             tm.tv_sec=0;
-            tm.tv_usec=us;
+            tm.tv_usec=0;
             if(us==0){
                 // no timeout
                 tm.tv_sec=-1;
+            } else {
+                tm.tv_sec=us/1000000;
+                tm.tv_usec=us%1000000;
             }
             modbus_set_response_timeout(ctx,&tm);
         }

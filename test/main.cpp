@@ -60,6 +60,7 @@ int main(int argc, const char * argv[])
     parameters = vm["mc"].as<std::string>();
     if(vm.count("sv")){
         slave = vm["sv"].as<int>();
+        printf("* setting slave:%d\n",slave);
     }
     
     if(regex_match(parameters,match,litteral_ip_port)){
@@ -85,9 +86,11 @@ int main(int argc, const char * argv[])
         cerr<< "## cannot connect to slave"<<endl;
         return -3;
     }
-    
+    modbus_drv->set_read_timeo(5000000);
+    modbus_drv->set_write_timeo(5000000);
     while(1){
         int ch;
+        int err;
         printf("\n1] write register \n");
         printf("2] read register \n");
         printf("3] read32 register \n");
@@ -101,21 +104,33 @@ int main(int argc, const char * argv[])
             unsigned long address,data;
             address = getData("write address");
             data = getData("data");
-            modbus_drv->preset_single_register(address,data,slave);
+            if((err=modbus_drv->preset_single_register(address,data,slave))<0){
+                     printf("## error presetting single register err:%d\n",err);
+                     return err;
+
+            }
         } else if(ch=='2'){
             unsigned long address;
-            uint16_t data;
+            uint32_t data=0,toconv;
+            
             address = getData("read address");
-            modbus_drv->read_input_registers(address,1,&data,slave);
-            printf("->0x%x(%d)\n",data,data);
+            if((err=modbus_drv->read_input_registers(address,1,(uint16_t*)&data,slave))<0){
+                printf("## error read single register err:%d\n",err);
+                return err;
+            }
+            printf("%d->0x%x(%d)\n",err,data,data);
         } else if(ch=='3'){
             unsigned long address;
             uint32_t data;
+            
             float* dataf=(float*)&data;
             address = getData("read32 address");
-            modbus_drv->read_input_registers(address,2,(uint16_t*)&data,slave);
+            if((err=modbus_drv->read_input_registers(address,2,(uint16_t*)&data,slave))<0){
+                printf("## error reading err:%d\n",err);
+                return err;
+            }
             
-            printf("->0x%x(%d) float:%f\n",data,data,*dataf);
+            printf("%d->0x%x(%d) float:%f\n",err,data,data,*dataf);
         } else {
             break;
         }
