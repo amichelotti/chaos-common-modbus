@@ -17,7 +17,7 @@
 
 static const boost::regex litteral_ip_port("([0-9a-zA-Z]+\\.[0-9a-zA-Z]+\\.[0-9a-zA-Z]+\\.[0-9a-zA-Z]+):([0-9]+)");
 // serial_device,baudrate,parity,bits,stop
-static const boost::regex serial_parameter("([[\\w]\\/]+):([0-9]+):([EO]):([78]):([01])");
+static const boost::regex serial_parameter("([[\\w]\\/]+):([0-9]+):([ENO]):([78]):([01])");
 #define USAGE \
  std::cout<<"Usage:"<<argv[0]<<" --mc <communication channel [ip:port or /dev/ttySxx,baudrate:parity:bits:stop]>"<<std::endl;
 using namespace std;

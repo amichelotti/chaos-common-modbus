@@ -28,5 +28,10 @@
         <group name="CHAOS DRIVER">
             <file>file:/home/michelo/chaos_bundle/common/modbus/core/LibModBusWrap.cpp</file>
         </group>
+        <group name="CHAOS_BUNDLE_DEVELOPMENT">
+            <file>file:/home/michelo/chaos_bundle_development/common/modbus/test/main.cpp</file>
+            <file>file:/home/michelo/chaos_bundle_development/common/modbus/core/AbstractModbus.h</file>
+            <file>file:/home/michelo/chaos_bundle_development/common/modbus/core/LibModBusWrap.cpp</file>
+        </group>
     </open-files>
 </project-private>
