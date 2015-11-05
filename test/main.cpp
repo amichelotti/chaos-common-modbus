@@ -17,9 +17,9 @@
 
 static const boost::regex litteral_ip_port("([0-9a-zA-Z]+\\.[0-9a-zA-Z]+\\.[0-9a-zA-Z]+\\.[0-9a-zA-Z]+):([0-9]+)");
 // serial_device,baudrate,parity,bits,stop
-static const boost::regex serial_parameter("([[\\w]\\/]+):([0-9]+):([EO]):([78]):([01])");
+static const boost::regex serial_parameter("([\\w\\/]+):([0-9]+):([ENO]):([78]):([01])");
 #define USAGE \
- std::cout<<"Usage:"<<argv[0]<<" --mc <communication channel [ip:port or /dev/ttySxx,baudrate:parity:bits:stop]>"<<std::endl;
+ std::cout<<"Usage:"<<argv[0]<<" --mc <communication channel [ip:port or /dev/ttySxx:baudrate:parity:bits:stop]>"<<std::endl;
 using namespace std;
 
 unsigned long int getData(const char*what){
@@ -47,13 +47,14 @@ int main(int argc, const char * argv[])
     std::string parameters;
     boost::smatch match;
     int modbusrtu=0;
+    std::cout << "Hello!" << std::endl;
     if(vm.count("help")){
         cout<<"Usage:"<<desc<<endl;
         return 0;
     }
     if(vm.count("mc")){
     } else {
-     std::cout<<"Usage:"<<argv[0]<<" --mc <communication channel [ip:port or /dev/ttySxx,baudrate:parity:bits:stop]>"<<std::endl;
+     std::cout<<"Usage:"<<argv[0]<<" --mc <communication channel [ip:port or /dev/ttySxx:baudrate:parity:bits:stop]>"<<std::endl;
         return -1;
     }
     
@@ -86,8 +87,10 @@ int main(int argc, const char * argv[])
         cerr<< "## cannot connect to slave"<<endl;
         return -3;
     }
-    modbus_drv->set_read_timeo(5000000);
-    modbus_drv->set_write_timeo(5000000);
+
+    modbus_drv->set_read_timeo(1000000);
+    modbus_drv->set_write_timeo(1000000);
+
     while(1){
         int ch;
         int err;
