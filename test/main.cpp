@@ -9,7 +9,7 @@
 #include <iostream>
 #include <boost/program_options.hpp>
 #include <boost/regex.hpp>
-#include "common/modbus/modbus.h"
+#include <common/modbus/ModBus.h>
 #include <string>
 #include <iostream>
 #include <string.h>
