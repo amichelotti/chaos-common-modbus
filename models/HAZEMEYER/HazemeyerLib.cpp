@@ -1,13 +1,7 @@
-#include <stdio.h>
-//#include <common/modbus/ModBus.h>
-//#include <../../common/modbus/ModBus.h>
-#include <../../common/modbus/core/LibModBusWrap.h>
+#include <common/modbus/ModBus.h>
 
 
-int Test()
-{
-  //common::modbus::AbstractModbus* modbus_drv=NULL;
-
+int Test(){
   printf("Ciao questo è un test\n");
   return 0;
 }
