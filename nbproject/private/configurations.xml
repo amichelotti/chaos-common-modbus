@@ -19,6 +19,8 @@
           <df name="core">
           </df>
         </df>
+        <df name="Progress">
+        </df>
         <df name="test_modbus.dir">
           <df name="test">
           </df>
@@ -31,6 +33,45 @@
         <in>LibModBusWrap.h</in>
         <in>modbus.cpp</in>
       </df>
+      <df name="external">
+        <df name="libmodbus">
+          <df name="autom4te.cache">
+          </df>
+          <df name="debian">
+            <df name="source">
+            </df>
+          </df>
+          <df name="doc">
+          </df>
+          <df name="m4">
+          </df>
+          <df name="src">
+            <in>modbus-data.c</in>
+            <in>modbus-private.h</in>
+            <in>modbus-rtu-private.h</in>
+            <in>modbus-rtu.c</in>
+            <in>modbus-rtu.h</in>
+            <in>modbus-tcp-private.h</in>
+            <in>modbus-tcp.c</in>
+            <in>modbus-tcp.h</in>
+            <in>modbus-version.h</in>
+            <in>modbus.c</in>
+            <in>modbus.h</in>
+          </df>
+          <df name="tests">
+            <in>bandwidth-client.c</in>
+            <in>bandwidth-server-many-up.c</in>
+            <in>bandwidth-server-one.c</in>
+            <in>random-test-client.c</in>
+            <in>random-test-server.c</in>
+            <in>unit-test-client.c</in>
+            <in>unit-test-server.c</in>
+            <in>unit-test.h</in>
+            <in>version.c</in>
+          </df>
+          <in>config.h</in>
+        </df>
+      </df>
       <df name="modbus.xcodeproj">
         <df name="project.xcworkspace">
         </df>
@@ -38,7 +79,7 @@
       <df name="test">
         <in>main.cpp</in>
       </df>
-      <in>modbus.h</in>
+      <in>ModBus.h</in>
     </df>
   </logicalFolder>
   <projectmakefile>Makefile</projectmakefile>
