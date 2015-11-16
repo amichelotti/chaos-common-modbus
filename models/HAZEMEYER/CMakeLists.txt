@@ -7,13 +7,17 @@ PROJECT(HazemeyerLib)
 
 
 IF(FrameworkLib)
-MESSAGE(STATUS,"Ciao" )
 SET(libs chaos_common ${FrameworkLib})
 ELSE()
-MESSAGE(STATUS,"Ciao2" )
 SET(libs pthread boost_regex boost_system)
 ENDIF()
 
 
 ADD_LIBRARY(HZLib SHARED ./HazemeyerLib.cpp)
 TARGET_LINK_LIBRARIES(HZLib ${MODBUSLIB} common_modbus)
+
+## gets all sources in test, a main function must be present
+FILE(GLOB modbus_test_src provalo.cpp)
+###
+ADD_EXECUTABLE(test_hazemeyer ${modbus_test_src})
+TARGET_LINK_LIBRARIES(test_hazemeyer ${MODBUSLIB} common_modbus HZLib ${libs} -lboost_regex -lboost_program_options)

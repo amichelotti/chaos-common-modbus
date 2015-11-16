@@ -17,11 +17,14 @@
         </df>
         <df name="HZLib.dir">
         </df>
-        <df name="Progress">
+        <df name="test_hazemeyer.dir">
+        </df>
+        <df name="test_modbus.dir">
         </df>
       </df>
       <in>HazemeyerLib.cpp</in>
       <in>HazemeyerLib.h</in>
+      <in>provalo.cpp</in>
     </df>
   </logicalFolder>
   <projectmakefile>Makefile</projectmakefile>
