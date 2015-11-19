@@ -77,8 +77,9 @@ namespace common {
                 parity = match[3];
                 bits =match[4];
                 stop = match[5];
-		if (parity == "E") par=2;
-		if (parity == "O") par=1;
+		if (parity == "E"  || parity =="e") par=2;
+		if (parity == "O" || parity =="o") par=1;
+                if (parity == "N" || parity =="n") par=0;
                 if(par<0){
                     fprintf(stderr, "bad parity %s\n",parity.c_str());
                     return -2;

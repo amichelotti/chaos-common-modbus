@@ -19,8 +19,6 @@
           <df name="core">
           </df>
         </df>
-        <df name="Progress">
-        </df>
         <df name="test_modbus.dir">
           <df name="test">
           </df>
