@@ -9,12 +9,11 @@
 #ifndef __COMMON_MODBUS_H__
 #define __COMMON_MODBUS_H__
 
-#include <iostream>
+
 #include <common/modbus/core/AbstractModbus.h>
 #include <common/modbus/core/LibModBusWrap.h>
 #include <chaos/common/utility/SingletonOnArguments.h>
 #include <string>
-#include <boost/regex.hpp>
 
 namespace common {
   namespace modbus {
