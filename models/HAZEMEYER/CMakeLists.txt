@@ -21,3 +21,7 @@ FILE(GLOB modbus_test_src provalo.cpp)
 ###
 ADD_EXECUTABLE(test_hazemeyer ${modbus_test_src})
 TARGET_LINK_LIBRARIES(test_hazemeyer ${MODBUSLIB} common_modbus HZLib ${libs} -lboost_regex -lboost_program_options)
+INSTALL_TARGETS(/lib HZLib)
+INSTALL_TARGETS(/bin test_hazemeyer)
+FILE(GLOB headers "*.h")
+INSTALL(FILES ${headers} DESTINATION include/common/modbus/models/HAZEMEYER)
