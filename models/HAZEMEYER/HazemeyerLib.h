@@ -7,6 +7,7 @@ extern "C"
 {
 int HZTest();
 };
+
 namespace Hazemeyer
 {
     namespace ConnectStatus
@@ -146,6 +147,8 @@ namespace Hazemeyer
         bool Connect();
         bool CloseConnection();
         void ScreenMenu();
+        bool setModbusWriteTimeout(uint32_t usec) {this->modbus_drv->set_write_timeo(usec);}
+        bool setModbusReadTimeout(uint32_t usec) {this->modbus_drv->set_read_timeo(usec);}
         Hazemeyer::ConnectStatus::ConnectStatus getConnectionStatus();
         bool ReadBitRegister(Hazemeyer::Corrector::ReadReg address,  short int* data);
         bool TurnOnMainUnit() {

@@ -15,29 +15,38 @@ Corrector::Corrector( char* SerialParameters){
     //la stringa viene scritta con ogni parametro separato da virgola
     char* tmp=NULL;
     char lwPar;
-    int parsingStatus=1;
-    tmp=strtok(SerialParameters,",");
-    //cout << tmp << endl; //serialdev
-    //checking serial dev as a string
-    if (strlen(tmp) )
-        this->SerialDev= tmp;
-    tmp= strtok(NULL,",");
-    //cout << tmp << endl;    //slave
-    this->slave=atoi(tmp);
-    tmp= strtok(NULL,",");
-    //cout << tmp << endl;    //baudRate
-    this->baudRate=atoi(tmp);
-    tmp= strtok(NULL,",");
-    //cout << tmp << endl;    //parity
-    this->parity=tmp[0];
-    
-    tmp= strtok(NULL,",");
-    //cout << tmp << endl;    //bits
-    this->bits=atoi(tmp);
-    tmp= strtok(NULL,",");
-    //cout << tmp << endl;    //stop
-    this->stopBits=atoi(tmp);
-    lwPar=tolower(this->parity);
+    try
+    {
+        tmp=strtok(SerialParameters,",");
+        //cout << tmp << endl; //serialdev
+        //checking serial dev as a string
+        if (strlen(tmp) )
+            this->SerialDev= tmp;
+        tmp= strtok(NULL,",");
+        //cout << tmp << endl;    //slave
+        this->slave=atoi(tmp);
+        tmp= strtok(NULL,",");
+        //cout << tmp << endl;    //baudRate
+        this->baudRate=atoi(tmp);
+        tmp= strtok(NULL,",");
+        //cout << tmp << endl;    //parity
+        this->parity=tmp[0];
+
+        tmp= strtok(NULL,",");
+        //cout << tmp << endl;    //bits
+        this->bits=atoi(tmp);
+        tmp= strtok(NULL,",");
+        //cout << tmp << endl;    //stop
+        this->stopBits=atoi(tmp);
+        lwPar=tolower(this->parity);
+    }
+    catch( int ex)
+    {
+        this->connectionStatus=Hazemeyer::ConnectStatus::UNDEFINED;
+        cerr<< "## error while parsing parameters"<<endl;
+        this->modbus_drv=NULL;
+        return;
+    }
     //check consistence.
     
     
