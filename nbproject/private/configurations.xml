@@ -4,26 +4,6 @@
     <df root="." name="0">
       <df name="build">
       </df>
-      <df name="CMakeFiles">
-        <df name="2.8.12.2">
-          <df name="CompilerIdC">
-            <in>CMakeCCompilerId.c</in>
-          </df>
-          <df name="CompilerIdCXX">
-            <in>CMakeCXXCompilerId.cpp</in>
-          </df>
-        </df>
-        <df name="CMakeTmp">
-        </df>
-        <df name="common_modbus.dir">
-          <df name="core">
-          </df>
-        </df>
-        <df name="test_modbus.dir">
-          <df name="test">
-          </df>
-        </df>
-      </df>
       <df name="core">
         <in>AbstractModbus.cpp</in>
         <in>AbstractModbus.h</in>
