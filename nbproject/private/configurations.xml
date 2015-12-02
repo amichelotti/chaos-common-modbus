@@ -35,10 +35,38 @@
         <df name="project.xcworkspace">
         </df>
       </df>
+      <df name="models">
+        <df name="HAZEMEYER">
+          <df name="build">
+          </df>
+          <df name="CMakeFiles">
+            <df name="2.8.12.2">
+              <df name="CompilerIdC">
+                <in>CMakeCCompilerId.c</in>
+              </df>
+              <df name="CompilerIdCXX">
+                <in>CMakeCXXCompilerId.cpp</in>
+              </df>
+            </df>
+            <df name="CMakeTmp">
+            </df>
+            <df name="HZLib.dir">
+            </df>
+            <df name="test_hazemeyer.dir">
+            </df>
+            <df name="test_modbus.dir">
+            </df>
+          </df>
+          <in>HazemeyerLib.cpp</in>
+          <in>HazemeyerLib.h</in>
+          <in>provalo.cpp</in>
+        </df>
+      </df>
       <df name="test">
         <in>main.cpp</in>
       </df>
-      <in>modbus.h</in>
+      <in>ModBus.h</in>
+      <in>Modbus.h</in>
     </df>
   </logicalFolder>
   <projectmakefile>Makefile</projectmakefile>
