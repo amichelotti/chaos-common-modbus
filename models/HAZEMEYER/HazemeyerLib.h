@@ -142,7 +142,7 @@ namespace Hazemeyer
         
         
         Corrector();
-        Corrector( char* SerialParameters);
+        Corrector(const char* SerialParameters);
         ~Corrector();
         bool Connect();
         bool CloseConnection();

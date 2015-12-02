@@ -11,9 +11,10 @@ extern "C"
 }
 
 
-Corrector::Corrector( char* SerialParameters){
+Corrector::Corrector( const char* SerialParameters2){
     //la stringa viene scritta con ogni parametro separato da virgola
     char* tmp=NULL;
+    char* SerialParameters=strdup(SerialParameters2);
     char lwPar;
     try
     {
@@ -40,15 +41,16 @@ Corrector::Corrector( char* SerialParameters){
         this->stopBits=atoi(tmp);
         lwPar=tolower(this->parity);
     }
-    catch( int ex)
+    catch(...)
     {
         this->connectionStatus=Hazemeyer::ConnectStatus::UNDEFINED;
         cerr<< "## error while parsing parameters"<<endl;
         this->modbus_drv=NULL;
+        free(SerialParameters);
         return;
     }
     //check consistence.
-    
+    free(SerialParameters);
     
     this->modbus_drv= new common::modbus::ModBusRTU(this->SerialDev.c_str(),this->baudRate,this->parity,
             this->bits,this->stopBits);
