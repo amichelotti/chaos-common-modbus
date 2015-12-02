@@ -4,60 +4,27 @@
     <df root="." name="0">
       <df name="build">
       </df>
-      <df name="core">
-        <in>AbstractModbus.cpp</in>
-        <in>AbstractModbus.h</in>
-        <in>LibModBusWrap.cpp</in>
-        <in>LibModBusWrap.h</in>
-        <in>modbus.cpp</in>
-      </df>
-      <df name="external">
-        <df name="libmodbus">
-          <df name="autom4te.cache">
+      <df name="CMakeFiles">
+        <df name="2.8.12.2">
+          <df name="CompilerIdC">
+            <in>CMakeCCompilerId.c</in>
           </df>
-          <df name="debian">
-            <df name="source">
-            </df>
+          <df name="CompilerIdCXX">
+            <in>CMakeCXXCompilerId.cpp</in>
           </df>
-          <df name="doc">
-          </df>
-          <df name="m4">
-          </df>
-          <df name="src">
-            <in>modbus-data.c</in>
-            <in>modbus-private.h</in>
-            <in>modbus-rtu-private.h</in>
-            <in>modbus-rtu.c</in>
-            <in>modbus-rtu.h</in>
-            <in>modbus-tcp-private.h</in>
-            <in>modbus-tcp.c</in>
-            <in>modbus-tcp.h</in>
-            <in>modbus-version.h</in>
-            <in>modbus.c</in>
-            <in>modbus.h</in>
-          </df>
-          <df name="tests">
-            <in>bandwidth-client.c</in>
-            <in>bandwidth-server-many-up.c</in>
-            <in>bandwidth-server-one.c</in>
-            <in>random-test-client.c</in>
-            <in>random-test-server.c</in>
-            <in>unit-test-client.c</in>
-            <in>unit-test-server.c</in>
-            <in>unit-test.h</in>
-            <in>version.c</in>
-          </df>
-          <in>config.h</in>
+        </df>
+        <df name="CMakeTmp">
+        </df>
+        <df name="HZLib.dir">
+        </df>
+        <df name="test_hazemeyer.dir">
+        </df>
+        <df name="test_modbus.dir">
         </df>
       </df>
-      <df name="modbus.xcodeproj">
-        <df name="project.xcworkspace">
-        </df>
-      </df>
-      <df name="test">
-        <in>main.cpp</in>
-      </df>
-      <in>ModBus.h</in>
+      <in>HazemeyerLib.cpp</in>
+      <in>HazemeyerLib.h</in>
+      <in>provalo.cpp</in>
     </df>
   </logicalFolder>
   <projectmakefile>Makefile</projectmakefile>
@@ -97,10 +64,8 @@
       <runprofile version="9">
         <runcommandpicklist>
           <runcommandpicklistitem>"${OUTPUT_PATH}"</runcommandpicklistitem>
-          <runcommandpicklistitem>"${OUTPUT_PATH}" --mc 192.168.191.21:502</runcommandpicklistitem>
-          <runcommandpicklistitem>"${OUTPUT_PATH}" --mc 192.168.191.21:502 --sv 1</runcommandpicklistitem>
         </runcommandpicklist>
-        <runcommand>"${OUTPUT_PATH}" --mc 192.168.191.21:502 --sv 1</runcommand>
+        <runcommand>"${OUTPUT_PATH}"</runcommand>
         <rundir>.</rundir>
         <buildfirst>false</buildfirst>
         <terminal-type>0</terminal-type>

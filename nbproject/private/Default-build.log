@@ -1,8 +1,0 @@
-[ 25%] Building CXX object CMakeFiles/common_modbus.dir/core/modbus.cpp.o
-[ 50%] Building CXX object CMakeFiles/common_modbus.dir/core/LibModBusWrap.cpp.o
-[ 75%] Building CXX object CMakeFiles/common_modbus.dir/core/AbstractModbus.cpp.o
-Linking CXX shared library build/libcommon_modbus.so
-[ 75%] Built target common_modbus
-[100%] Building CXX object CMakeFiles/test_modbus.dir/test/main.cpp.o
-Linking CXX executable build/test_modbus
-[100%] Built target test_modbus
