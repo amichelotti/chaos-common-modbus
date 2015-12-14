@@ -125,6 +125,8 @@ namespace Hazemeyer
             CH6_VOLTAGE=0xB9,
             CH7_CURRENT=0xBC,
             CH7_VOLTAGE=0xBD,
+            CHS_READY=0xC2,
+            CHS_POWER=0xC3,
             
             CH0_ALIAS_CURRENT=0xC4,
             CH1_ALIAS_CURRENT=0xC5,
