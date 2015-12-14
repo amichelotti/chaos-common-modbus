@@ -179,7 +179,7 @@ namespace Hazemeyer
         short int bits;
         short int stopBits;
         Hazemeyer::ConnectStatus::ConnectStatus connectionStatus;
-        common::modbus::AbstractModbus* modbus_drv=NULL;
+        ::common::modbus::AbstractModbus* modbus_drv=NULL;
         int slave;
         bool WriteRegister(Hazemeyer::Corrector::WriteReg address, short int data);
         void ScreenSetChanCurrent();
