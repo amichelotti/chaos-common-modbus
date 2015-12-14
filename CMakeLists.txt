@@ -1,4 +1,5 @@
 cmake_minimum_required(VERSION 2.6)
+project(common_modbus)
 IF (DEFINED ENV{CHAOS_BUNDLE} )
   include($ENV{CHAOS_BUNDLE}/tools/project_template/CMakeChaos.txt)
 ELSE()
@@ -101,24 +102,24 @@ SET(libs pthread boost_regex boost_system)
 ENDIF()
 
 IF(BUILD_FORCE_STATIC)
-ADD_LIBRARY(common_modbus STATIC ${modbus_src})
+ADD_LIBRARY(${PROJECT_NAME} STATIC ${modbus_src})
 ELSE()
-ADD_LIBRARY(common_modbus SHARED ${modbus_src})
+ADD_LIBRARY(${PROJECT_NAME} SHARED ${modbus_src})
 ENDIF()
 
 
 
 # set_target_properties(common_modbus_static PROPERTIES output_name common_modbus)
-TARGET_LINK_LIBRARIES(common_modbus ${MODBUSLIB}  ${libs})
+TARGET_LINK_LIBRARIES(${PROJECT_NAME} ${MODBUSLIB}  ${libs})
 
 ## gets all sources in test, a main function must be present
 FILE(GLOB modbus_test_src test/*.cpp)
 ###
 ADD_EXECUTABLE(test_modbus ${modbus_test_src})
 
-TARGET_LINK_LIBRARIES(test_modbus ${MODBUSLIB} common_modbus ${libs} -lboost_regex -lboost_program_options)
+TARGET_LINK_LIBRARIES(test_modbus ${MODBUSLIB} ${PROJECT_NAME} ${libs} -lboost_regex -lboost_program_options)
 
-INSTALL_TARGETS(/lib  common_modbus)
+INSTALL_TARGETS(/lib ${PROJECT_NAME})
 INSTALL_TARGETS(/bin test_modbus)
 FILE(GLOB headers "core/*.h")
 INSTALL(FILES ModBus.h DESTINATION include/common/modbus)

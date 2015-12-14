@@ -22,7 +22,7 @@ SET(libs pthread boost_regex boost_system)
 ENDIF()
 
 
-ADD_LIBRARY(${PROJECT_NAME} SHARED ./HazemeyerLib.cpp)
+ADD_LIBRARY(${PROJECT_NAME} STATIC ./HazemeyerLib.cpp)
 TARGET_LINK_LIBRARIES(${PROJECT_NAME} ${MODBUSLIB} common_modbus)
 
 ## gets all sources in test, a main function must be present
