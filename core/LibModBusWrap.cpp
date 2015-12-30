@@ -12,7 +12,7 @@
 #include <string>
 #include <boost/regex.hpp>
 static const boost::regex modbusTcp("(.+):(.+)");
-static const boost::regex modbusRTU("([[\\w]\\/]+):([0-9]+):([EO]):([78]):([01])");
+static const boost::regex modbusRTU("([\\w\\/]+):([0-9]+):([ENO]):([78]):([01])");
 
 // tcp
 namespace common {
@@ -71,12 +71,29 @@ namespace common {
                 
             } else if(regex_match(_init,match,modbusRTU,boost::match_extra)){
                 std::string dev,baudrate,parity,bits,stop;
+                int par=-1;
                 dev = match[1];
                 baudrate = match[2];
                 parity = match[3];
                 bits =match[4];
                 stop = match[5];
-                return init(dev.c_str(),::atoi(baudrate.c_str()),atoi(parity.c_str()),atoi(bits.c_str()),atoi(stop.c_str()));
+		if (parity == "E"  || parity =="e") par=2;
+		if (parity == "O" || parity =="o") par=1;
+                if (parity == "N" || parity =="n") par=0;
+                if(par<0){
+                    fprintf(stderr, "bad parity %s\n",parity.c_str());
+                    return -2;
+                }
+                if(bits !="7" || bits!="8"){
+                       fprintf(stderr, "bad bits  specification %s\n",bits.c_str());
+                    return -4;
+                }
+                if(stop !="0" || stop!="1"){
+                       fprintf(stderr, "bad stop bit  specification %s\n",stop.c_str());
+                    return -5;
+                }
+                
+                return init(dev.c_str(),::atoi(baudrate.c_str()),par,atoi(bits.c_str()),atoi(stop.c_str()));
             }
             return -3;
         }
@@ -117,20 +134,26 @@ namespace common {
         void LibModBusWrap::set_write_timeo(uint32_t us){
             struct timeval tm;
             tm.tv_sec=0;
-            tm.tv_usec=us;
+            tm.tv_usec=0;
             if(us==0){
                 // no timeout
                 tm.tv_sec=-1;
+            } else {
+                tm.tv_sec=us/1000000;
+                tm.tv_usec=us%1000000;
             }
             modbus_set_byte_timeout(ctx, &tm);
         }
         void LibModBusWrap::set_read_timeo(uint32_t us){
             struct timeval tm;
             tm.tv_sec=0;
-            tm.tv_usec=us;
+            tm.tv_usec=0;
             if(us==0){
                 // no timeout
                 tm.tv_sec=-1;
+            } else {
+                tm.tv_sec=us/1000000;
+                tm.tv_usec=us%1000000;
             }
             modbus_set_response_timeout(ctx,&tm);
         }

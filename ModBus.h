@@ -1,6 +1,6 @@
 //
-//  ModBus.h
-//  CHAOS_SWPowerSupplyModbusDD
+//  Modbus.h
+//
 //
 //  Created by andrea michelotti on 9/10/13.
 //
@@ -9,17 +9,14 @@
 #ifndef __COMMON_MODBUS_H__
 #define __COMMON_MODBUS_H__
 
-#include <iostream>
-#include "common/modbus/core/AbstractModbus.h"
-#include "common/modbus/core/LibModBusWrap.h"
+
+#include <common/modbus/core/AbstractModbus.h>
+#include <common/modbus/core/LibModBusWrap.h>
 #include <chaos/common/utility/SingletonOnArguments.h>
 #include <string>
-#include <boost/regex.hpp>
 
 namespace common {
-    namespace modbus{
-
-
+  namespace modbus {
         template<class MODBUSWRAPPER>
         class ModBusTcpT:public MODBUSWRAPPER {
         public:
@@ -54,6 +51,6 @@ namespace common {
         typedef ModBus< ::common::modbus::LibModBusWrap> ModBusDrv;
 
 
-    }
+  }
 }
-#endif /* defined(__CHAOS_SWPowerSupplyModbusDD__ModBusTcp__) */
+#endif 

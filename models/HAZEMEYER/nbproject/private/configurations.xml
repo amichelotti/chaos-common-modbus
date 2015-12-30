@@ -15,30 +15,16 @@
         </df>
         <df name="CMakeTmp">
         </df>
-        <df name="common_modbus.dir">
-          <df name="core">
-          </df>
+        <df name="HZLib.dir">
+        </df>
+        <df name="test_hazemeyer.dir">
         </df>
         <df name="test_modbus.dir">
-          <df name="test">
-          </df>
         </df>
       </df>
-      <df name="core">
-        <in>AbstractModbus.cpp</in>
-        <in>AbstractModbus.h</in>
-        <in>LibModBusWrap.cpp</in>
-        <in>LibModBusWrap.h</in>
-        <in>modbus.cpp</in>
-      </df>
-      <df name="modbus.xcodeproj">
-        <df name="project.xcworkspace">
-        </df>
-      </df>
-      <df name="test">
-        <in>main.cpp</in>
-      </df>
-      <in>modbus.h</in>
+      <in>HazemeyerLib.cpp</in>
+      <in>HazemeyerLib.h</in>
+      <in>provalo.cpp</in>
     </df>
   </logicalFolder>
   <projectmakefile>Makefile</projectmakefile>
