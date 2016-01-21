@@ -14,6 +14,7 @@ ELSE()
 ENDIF()
 PROJECT(HZLib)
 
+ADD_DEFINITIONS(-DHAZEMEYER_DEBUG)
 
 IF(FrameworkLib)
 SET(libs chaos_common ${FrameworkLib})

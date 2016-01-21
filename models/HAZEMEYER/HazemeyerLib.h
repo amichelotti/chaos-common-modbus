@@ -1,6 +1,10 @@
 #include <cstring>
 #include <vector>
 #include <malloc.h>
+
+#ifdef HAZEMEYER_DEBUG
+#define DEBUG
+#endif
 #include <common/modbus/ModBus.h>
 using namespace std;
 extern "C"

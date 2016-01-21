@@ -1,5 +1,6 @@
 
 #include "HazemeyerLib.h"
+#include <common/debug/core/debug.h>
 using namespace Hazemeyer;
 extern "C"
 {
@@ -44,7 +45,7 @@ Corrector::Corrector( const char* SerialParameters2){
     catch(...)
     {
         this->connectionStatus=Hazemeyer::ConnectStatus::UNDEFINED;
-        cerr<< "## error while parsing parameters"<<endl;
+        DERR("## error while parsing parameters");
         this->modbus_drv=NULL;
         free(SerialParameters);
         return;
@@ -58,13 +59,15 @@ Corrector::Corrector( const char* SerialParameters2){
     
      if(this->modbus_drv==NULL)
      {
-        cerr<< "## invalid parameters:"<<endl;
+        DERR("## invalid parameters");
         this->connectionStatus=Hazemeyer::ConnectStatus::UNDEFINED;
+        return;
      }
      else
          this->connectionStatus=Hazemeyer::ConnectStatus::UNCONNECTED;
     
-    
+    //modbus_drv->set_read_timeo(5000000);
+    //modbus_drv->set_write_timeo(5000000);
     
     
 };
@@ -74,7 +77,7 @@ Corrector::Corrector(){
     this->modbus_drv= new common::modbus::ModBusRTU("/dev/ttyr0f",9600,'N',8,1);
      if(this->modbus_drv==NULL)
      {
-        cerr<< "## invalid parameters:"<<endl;
+        DERR("## invalid parameters");
         this->connectionStatus=Hazemeyer::ConnectStatus::UNDEFINED;
      }
      else
@@ -92,7 +95,7 @@ bool Corrector::Connect(){
         return false;
     if(this->modbus_drv->connect()!=true)
     {
-        cerr<< "## cannot connect to slave"<<endl;
+        DERR("## cannot connect to slave");
         return false;
     }
     this->connectionStatus = Hazemeyer::ConnectStatus::CONNECTED;
@@ -116,20 +119,21 @@ bool Corrector::ReadBitRegister(Corrector::ReadReg address, short int* cont) {
     
     if (this->connectionStatus != Hazemeyer::ConnectStatus::CONNECTED)
     {
-        cerr << "The connection is not established. Nothing to read" << endl;
+        DERR( "The connection is not established. Nothing to read");
         return false;
     }
     if (this->slave < 0)
     {
-        cerr << "The slave parameter is not set. Nothing to read" << endl;
+        
+        DERR( "The slave parameter is not set. Nothing to read");
         return false;
     }
     data= (uint16_t*)malloc(sizeof(uint16_t));
     err = this->modbus_drv->read_input_registers(address,1,(uint16_t*)data,this->slave);
     if (err <= 0) 
     {
-            
-        cout << "err " << err << "(" << *cont << ")" << endl;
+       
+        DERR( "[%d] error reading addr:0x%x ret=%d",this->slave,address,err);
         free(data);
         return false;
     }
@@ -149,11 +153,11 @@ bool Corrector::ReadBitRegister(Corrector::ReadReg address, short int* cont) {
         case 5 : chan=Corrector::CH5_COMMANDS; break;
         case 6 : chan=Corrector::CH6_COMMANDS; break;
         case 7 : chan=Corrector::CH7_COMMANDS; break;
-        default : cerr << "Invalid channel Number" << endl; return false;
+        default : DERR( "Invalid channel Number"); return false;
      }
      if ( this->WriteRegister(chan,com) )
      {
-         cout << "Command "<< com << " sent to channel " << std::hex << chan << endl;
+         DPRINT( "Command 0x%x sent to channel %d", com,chan);
          return true;
      }
      else return false;
@@ -173,11 +177,11 @@ bool Corrector::SetChannelCurrent(unsigned int channel,double val){
         case 5 : chan=Corrector::CH5_SETCURR; break;
         case 6 : chan=Corrector::CH6_SETCURR; break;
         case 7 : chan=Corrector::CH7_SETCURR; break;
-        default : cerr << "Invalid channel Number" << endl; return false;
+        default : DERR("Invalid channel Number"); return false;
      }
      if ( this->WriteRegister(chan,convertedValue) )
      {
-       cout << "write current " << std::hex << convertedValue << endl; 
+       DPRINT("write current 0x%x", convertedValue); 
        return true;
      }
      else
@@ -315,6 +319,7 @@ void Corrector::ScreenMenu(){
 bool Corrector::ReadChannelCurrent(unsigned int channel, double *data){
     Corrector::ReadReg chan;
     short int readData;
+    int ret;
     switch (channel)
     {
         case 0 : chan=Corrector::CH0_ALIAS_CURRENT; break;
@@ -327,18 +332,22 @@ bool Corrector::ReadChannelCurrent(unsigned int channel, double *data){
         case 7 : chan=Corrector::CH7_ALIAS_CURRENT; break;
         default : cerr << "Invalid channel Number" << endl; return false;
     }
-    if ( this->ReadBitRegister(chan,&readData))
+    if ((ret= this->ReadBitRegister(chan,&readData)))
     {
-        cout << "read current " << std::hex << readData << endl; 
+        DPRINT("read current 0x%x",readData); 
         *data = this->ConvertFromDigit(Corrector::CONV_CHAN_AMP,readData); 
         return true;
     }
-    else
+    else{
+        DERR("error reading addr 0x%x, ret=0x%x",chan,ret);
+
         return false;
+    }
 }
 bool Corrector::ReadChannelVoltage(unsigned int channel, double *data){
     Corrector::ReadReg chan;
     short int readData;
+    int ret;
     switch (channel)
     {
         case 0 : chan=Corrector::CH0_VOLTAGE; break;
@@ -351,13 +360,15 @@ bool Corrector::ReadChannelVoltage(unsigned int channel, double *data){
         case 7 : chan=Corrector::CH7_VOLTAGE; break;
         default : cerr << "Invalid channel Number" << endl; return false;
     }
-    if ( this->ReadBitRegister(chan,&readData))
+    if ( (ret=this->ReadBitRegister(chan,&readData)))
     {
         *data = this->ConvertFromDigit(Corrector::CONV_CHAN_VOLT,readData); 
         return true;
     }
-    else
+    else{
+        DERR("error reading addr 0x%x, ret=0x%x",chan,ret);
         return false;
+    }
 };
 double Corrector::ConvertFromDigit(Corrector::Conversions mode,int digital) {
       short int value;
@@ -379,7 +390,7 @@ bool Corrector::WriteRegister(Corrector::WriteReg address, short int data) {
     int ret;
     if (this->connectionStatus != Hazemeyer::ConnectStatus::CONNECTED)
     {
-        cerr << "The connection is not established. Write is impossible" << endl;
+        DERR( "The connection is not established. Write is impossible");
         return false;
     }
    // cout << "fake writing: on address " << std::hex << address << " data " << std::hex << data <<endl;
