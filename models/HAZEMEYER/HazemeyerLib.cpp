@@ -113,9 +113,9 @@ ConnectStatus::ConnectStatus Hazemeyer::Corrector::getConnectionStatus() {
     return this->connectionStatus;
 }
 bool Corrector::ReadBitRegister(Corrector::ReadReg address, short int* cont) {
-    int err;
-    uint16_t* data;
-    //data=0;
+    int err,retry;
+    uint16_t data;
+    data=0;
     
     if (this->connectionStatus != Hazemeyer::ConnectStatus::CONNECTED)
     {
@@ -128,17 +128,23 @@ bool Corrector::ReadBitRegister(Corrector::ReadReg address, short int* cont) {
         DERR( "The slave parameter is not set. Nothing to read");
         return false;
     }
-    data= (uint16_t*)malloc(sizeof(uint16_t));
-    err = this->modbus_drv->read_input_registers(address,1,(uint16_t*)data,this->slave);
+    //data= (uint16_t*)malloc(sizeof(uint16_t));
+    retry=3;
+    do
+    { 
+        err = this->modbus_drv->read_input_registers(address,1,(uint16_t*)&data,this->slave);
+        retry--;
+    }
+    while ((err <= 0) && (retry > 0) );
     if (err <= 0) 
     {
        
         DERR( "[%d] error reading addr:0x%x ret=%d",this->slave,address,err);
-        free(data);
+        //free(data);
         return false;
     }
-    *cont = (*data) & 0x0000FFFF;       
-    free(data); 
+    *cont = (data) & 0x0000FFFF;       
+    //free(data); 
     return true;
 }
  bool Corrector::SendChannelCommand(unsigned int channel,Corrector::Commands com) {
@@ -387,7 +393,7 @@ double Corrector::ConvertFromDigit(Corrector::Conversions mode,int digital) {
     };
 }
 bool Corrector::WriteRegister(Corrector::WriteReg address, short int data) {
-    int ret;
+    int ret,retry;
     if (this->connectionStatus != Hazemeyer::ConnectStatus::CONNECTED)
     {
         DERR( "The connection is not established. Write is impossible");
@@ -395,7 +401,13 @@ bool Corrector::WriteRegister(Corrector::WriteReg address, short int data) {
     }
    // cout << "fake writing: on address " << std::hex << address << " data " << std::hex << data <<endl;
     //return true;
+    retry=3;
+    do
+    {
     ret=this->modbus_drv->preset_single_register(address,(int) data,this->slave);
+    retry--;
+    }
+    while ( (ret<0) && (retry >0) ); 
     if (ret < 0)
         return false;
     return true;
