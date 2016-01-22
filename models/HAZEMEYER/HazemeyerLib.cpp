@@ -134,12 +134,13 @@ bool Corrector::ReadBitRegister(Corrector::ReadReg address, short int* cont) {
     { 
         err = this->modbus_drv->read_input_registers(address,1,(uint16_t*)&data,this->slave);
         retry--;
+	if (retry < 2) DERR("retry= %d",retry);
     }
     while ((err <= 0) && (retry > 0) );
     if (err <= 0) 
     {
        
-        DERR( "[%d] error reading addr:0x%x ret=%d",this->slave,address,err);
+        DERR( "[%d] error reading addr:0x%x ret=%d, retry=%d",this->slave,address,err,retry);
         //free(data);
         return false;
     }
@@ -406,6 +407,7 @@ bool Corrector::WriteRegister(Corrector::WriteReg address, short int data) {
     {
     ret=this->modbus_drv->preset_single_register(address,(int) data,this->slave);
     retry--;
+	if (retry < 2) DERR("retry write= %d",retry);
     }
     while ( (ret<0) && (retry >0) ); 
     if (ret < 0)
