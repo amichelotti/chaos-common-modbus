@@ -24,7 +24,7 @@ ENDIF()
 
 
 ADD_LIBRARY(${PROJECT_NAME} STATIC ./HazemeyerLib.cpp)
-TARGET_LINK_LIBRARIES(${PROJECT_NAME} ${MODBUSLIB} common_modbus common_powersupply)
+TARGET_LINK_LIBRARIES(${PROJECT_NAME} ${MODBUSLIB} common_modbus )
 
 ## gets all sources in test, a main function must be present
 FILE(GLOB modbus_test_src provalo.cpp)
