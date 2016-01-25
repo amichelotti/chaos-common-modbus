@@ -173,7 +173,7 @@ bool Corrector::ReadBitRegister(Corrector::ReadReg address, short int* cont) {
 bool Corrector::SetChannelCurrent(unsigned int channel,double val){
      Corrector::WriteReg chan;
      short int convertedValue;
-     convertedValue= (short int) (208.333*val);
+     convertedValue= (short int) (204.918*val);
      switch (channel)
      {
          case 0 :chan=Corrector::CH0_SETCURR; break;
