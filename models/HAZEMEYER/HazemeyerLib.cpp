@@ -173,9 +173,12 @@ bool Corrector::ReadBitRegister(Corrector::ReadReg address, short int* cont) {
 bool Corrector::SetChannelCurrent(unsigned int channel,double val){
      Corrector::WriteReg chan;
      short int convertedValue;
-     const double convFactor=208.1;
+     const double convFactor=204.918;
      //convertedValue= (short int) (208.333*val);
      convertedValue= (short int) (convFactor*val);
+     if ((val > 0) && (convertedValue > 0x7FF)) convertedValue=0x7FF;
+     if ((val < 0) && (convertedValue < 0x800)) convertedValue=0x800;
+
      DPRINT("ALEDEBUG setting current %f %f %x",val,convFactor,convertedValue);
      switch (channel)
      {
