@@ -39,6 +39,8 @@
         <element flagsID="0"
                  commonFlags="-fPIC -fPIC -fPIC -fPIC -fPIC -fPIC -fPIC -fPIC -O3"/>
         <element flagsID="1"
+                 commonFlags="-fPIC -fPIC -fPIC -fPIC -fPIC -fPIC -fPIC -fPIC -O3 -O2 -O2"/>
+        <element flagsID="2"
                  commonFlags="-fPIC -fPIC -fPIC -fPIC -fPIC -fPIC -fPIC -fPIC -O3 -fPIC"/>
       </flagsDictionary>
       <codeAssistance>
@@ -53,7 +55,6 @@
             <incDir>
               <pElem>.</pElem>
               <pElem>../..</pElem>
-              <pElem>../../chaos-x86_64-dynamic-release/include</pElem>
             </incDir>
             <preprocessorList>
               <Elem>CHAOS</Elem>
@@ -63,11 +64,14 @@
         </makeTool>
       </makefileType>
       <item path="core/LibModBusWrap.cpp" ex="false" tool="1" flavor2="4">
-        <ccTool flags="1">
+        <ccTool flags="2">
         </ccTool>
       </item>
       <folder path="0/core">
         <ccTool>
+          <incDir>
+            <pElem>../../chaos-x86_64-dynamic-release/include</pElem>
+          </incDir>
           <preprocessorList>
             <Elem>common_modbus_EXPORTS</Elem>
           </preprocessorList>
@@ -76,19 +80,29 @@
       <folder path="0/models">
         <ccTool>
           <incDir>
+            <pElem>..</pElem>
+            <pElem>../../chaos-x86_64-dynamic-release/include</pElem>
             <pElem>models/HAZEMEYER</pElem>
+            <pElem>models</pElem>
           </incDir>
           <preprocessorList>
             <Elem>HAZEMEYER_DEBUG</Elem>
           </preprocessorList>
         </ccTool>
       </folder>
+      <folder path="0/test">
+        <ccTool>
+          <incDir>
+            <pElem>../../chaos-x86_64-dynamic-release/include</pElem>
+          </incDir>
+        </ccTool>
+      </folder>
       <item path="models/HAZEMEYER/HazemeyerLib.cpp" ex="false" tool="1" flavor2="0">
-        <ccTool flags="0">
+        <ccTool flags="1">
         </ccTool>
       </item>
-      <item path="models/HAZEMEYER/provalo.cpp" ex="false" tool="1" flavor2="0">
-        <ccTool flags="0">
+      <item path="models/HAZEMEYER/provalo.cpp" ex="false" tool="1" flavor2="4">
+        <ccTool flags="1">
         </ccTool>
       </item>
       <item path="test/main.cpp" ex="false" tool="1" flavor2="4">

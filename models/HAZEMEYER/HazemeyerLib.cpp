@@ -112,10 +112,10 @@ bool Corrector::CloseConnection(){
 ConnectStatus::ConnectStatus Hazemeyer::Corrector::getConnectionStatus() { 
     return this->connectionStatus;
 }
-bool Corrector::ReadBitRegister(Corrector::ReadReg address, uint16_t* cont) {
+bool Corrector::ReadBitRegister(Corrector::ReadReg address, int16_t* cont) {
     int err,retry;
-    uint16_t data;
-    data=0;
+    int32_t data=0;
+    
     
     if (this->connectionStatus != Hazemeyer::ConnectStatus::CONNECTED)
     {
@@ -144,7 +144,7 @@ bool Corrector::ReadBitRegister(Corrector::ReadReg address, uint16_t* cont) {
         //free(data);
         return false;
     }
-    *cont = (data) & 0x0000FFFF;       
+    *cont = (data) & 0xFFFF;       
     //free(data); 
     return true;
 }
@@ -172,14 +172,27 @@ bool Corrector::ReadBitRegister(Corrector::ReadReg address, uint16_t* cont) {
 
 bool Corrector::SetChannelCurrent(unsigned int channel,double val){
      Corrector::WriteReg chan;
-     uint16_t convertedValue;
+     //int16_t convertedValue=0,rr;
      const double convFactor=204.918;
+     int16_t rr,convertedValue;
+     /*
+     convertedValue=(fabs(val)/10.0)*((1<<11)-1);
+     rr=convertedValue;
+     
+     if(val<0){
+         convertedValue|=0x800;
+     }
+     */
      //convertedValue= (uint16_t) (208.333*val);
-     convertedValue= (uint16_t) (convFactor*val);
+     convertedValue= (int16_t) (convFactor*val);
+     rr=convertedValue;
      if ((val > 0) && (convertedValue > 0x7FF)) convertedValue=0x7FF;
-     if ((val < 0) && (convertedValue < 0x800)) convertedValue=0x800;
+     if((val-0.005)<-10){
+         convertedValue=0x800;
+     }
+     //if ((val < 0) && (convertedValue < 0x800)) convertedValue=0x800;
 
-     DPRINT("ALEDEBUG setting current %f %f %x",val,convFactor,convertedValue);
+     DPRINT("ALEDEBUG setting current %f %f %X->%X....",val,convFactor,rr,convertedValue);
 
      switch (channel)
      {
@@ -248,7 +261,7 @@ void Corrector::ScreenMenu(){
                             cout << "error reading" << endl; 
                     } break;
             case 3: 
-                    uint16_t read;
+                    int16_t read;
                     ret= this->ReadBitRegister(Corrector::GENERAL_STATUS,&read) ;
                     if (ret)
                         cout << "read GENERAL_STATUS " << std::hex << read << endl; 
@@ -332,7 +345,7 @@ void Corrector::ScreenMenu(){
 }
 bool Corrector::ReadChannelCurrent(unsigned int channel, double *data){
     Corrector::ReadReg chan;
-    uint16_t readData;
+    int32_t readData=0;
     int ret;
     switch (channel)
     {
@@ -346,7 +359,7 @@ bool Corrector::ReadChannelCurrent(unsigned int channel, double *data){
         case 7 : chan=Corrector::CH7_ALIAS_CURRENT; break;
         default : cerr << "Invalid channel Number" << endl; return false;
     }
-    if ((ret= this->ReadBitRegister(chan,&readData)))
+    if ((ret= this->ReadBitRegister(chan,(int16_t*)&readData)))
     {
         DPRINT("read current 0x%x",readData); 
         *data = this->ConvertFromDigit(Corrector::CONV_CHAN_AMP,readData); 
@@ -360,7 +373,7 @@ bool Corrector::ReadChannelCurrent(unsigned int channel, double *data){
 }
 bool Corrector::ReadChannelVoltage(unsigned int channel, double *data){
     Corrector::ReadReg chan;
-    uint16_t readData;
+    int32_t readData=0;
     int ret;
     switch (channel)
     {
@@ -374,7 +387,7 @@ bool Corrector::ReadChannelVoltage(unsigned int channel, double *data){
         case 7 : chan=Corrector::CH7_VOLTAGE; break;
         default : cerr << "Invalid channel Number" << endl; return false;
     }
-    if ( (ret=this->ReadBitRegister(chan,&readData)))
+    if ( (ret=this->ReadBitRegister(chan,(int16_t*)&readData)))
     {
         *data = this->ConvertFromDigit(Corrector::CONV_CHAN_VOLT,readData); 
         return true;
@@ -385,8 +398,8 @@ bool Corrector::ReadChannelVoltage(unsigned int channel, double *data){
     }
 };
 double Corrector::ConvertFromDigit(Corrector::Conversions mode,int digital) {
-      uint16_t value;
-     value= digital & 0x0000FFFF;
+     int16_t value;
+     value= (digital & 0xFFFF);
       switch (mode)
     {
         case CONV_MAIN_VOLT: /*MAIN VOLTAGE Vrms*/ return (value*0.311);
@@ -400,7 +413,7 @@ double Corrector::ConvertFromDigit(Corrector::Conversions mode,int digital) {
         default: return (double) digital;
     };
 }
-bool Corrector::WriteRegister(Corrector::WriteReg address, uint16_t data) {
+bool Corrector::WriteRegister(Corrector::WriteReg address, int16_t data) {
     int ret,retry;
     if (this->connectionStatus != Hazemeyer::ConnectStatus::CONNECTED)
     {
@@ -446,7 +459,7 @@ void Corrector::ScreenReadSingleRegister() {
     int count=0;
     time_t now, bef;
     bool loop=false;
-    uint16_t data;
+    int16_t data=0;
     cout << "Enter Register address in hex" << endl;
     cin >> std::hex >> reg;
     cout << "Unlimited Loop on?" << endl;
@@ -472,7 +485,7 @@ void Corrector::ScreenReadSingleRegister() {
     while (loop);
 }
 void Corrector::ScreenChannelCommands(){
-    int read=0,rn=0;
+    int32_t dread=0,rn=0;
     int func, chan,ret;
     do
     {
@@ -480,21 +493,20 @@ void Corrector::ScreenChannelCommands(){
         cout << "2: Reset Channel" << endl;
         cout << "3: Power Off Channel" << endl;
         cout << "4: Read Channel Status" << endl;
-        rn= scanf("%d",&read);
+        rn= scanf("%d",&dread);
     }
-    while ((rn!=1) || (read < 0) || (read > 4) );
-    func=read;
+    while ((rn!=1) || (dread < 0) || (dread > 4) );
+    func=dread;
     do
     { 
         cout << "   which channel (1-8) ?" << endl;
-        rn=scanf("%d",&read);
+        rn=scanf("%d",&dread);
     }
-    while ((rn!=1) || (read <= 0) || (read > 8) );
-    chan=read-1;
+    while ((rn!=1) || (dread <= 0) || (dread > 8) );
+    chan=dread-1;
     //cout << "func " << func << " Phchannel " << chan << endl;
     if (func == 4)
     {
-        uint16_t read;
         Corrector::ReadReg BaseAddress;
         switch(chan)
         {
@@ -509,16 +521,18 @@ void Corrector::ScreenChannelCommands(){
             case 7: BaseAddress=Corrector::CH7_FAULTS;break;
              
         }
-        ret= this->ReadBitRegister(BaseAddress,&read) ;
-        if (ret)
-            cout << "read channel "<< chan << " Faults " << std::hex << read << endl; 
-        else
+        ret= this->ReadBitRegister(BaseAddress,(int16_t*)&dread) ;
+        if (ret){
+            cout << "read channel "<< chan << " Faults " << std::hex << dread << endl; 
+        } else{
             cout << "error reading" << endl; 
-        ret= this->ReadBitRegister((Corrector::ReadReg) (BaseAddress+1),&read) ;
-        if (ret)
-            cout << "read channel "<< chan  << " Status " << std::hex << read << endl; 
-        else
+        }
+        ret= this->ReadBitRegister((Corrector::ReadReg) (BaseAddress+1),(int16_t*)&dread) ;
+        if (ret){
+            cout << "read channel "<< chan  << " Status " << std::hex << dread << endl; 
+        } else{
             cout << "error reading" << endl; 
+        }
     }
     else
     {
