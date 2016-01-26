@@ -8,6 +8,7 @@
       <df name="models">
         <df name="HAZEMEYER">
           <in>HazemeyerLib.cpp</in>
+          <in>provalo.cpp</in>
         </df>
       </df>
       <df name="test">
@@ -35,11 +36,10 @@
         <rebuildPropChanged>false</rebuildPropChanged>
       </toolsSet>
       <flagsDictionary>
-        <element flagsID="0" commonFlags="-O3 -O2"/>
+        <element flagsID="0"
+                 commonFlags="-fPIC -fPIC -fPIC -fPIC -fPIC -fPIC -fPIC -fPIC -O3"/>
         <element flagsID="1"
-                 commonFlags="-fPIC -fPIC -fPIC -fPIC -fPIC -fPIC -fPIC -fPIC -O3 -O2 -O2"/>
-        <element flagsID="2"
-                 commonFlags="-fPIC -fPIC -fPIC -fPIC -fPIC -fPIC -fPIC -fPIC -O3 -fPIC -O2"/>
+                 commonFlags="-fPIC -fPIC -fPIC -fPIC -fPIC -fPIC -fPIC -fPIC -O3 -fPIC"/>
       </flagsDictionary>
       <codeAssistance>
       </codeAssistance>
@@ -49,19 +49,21 @@
           <buildCommand>${MAKE} -f Makefile install</buildCommand>
           <cleanCommand>${MAKE} -f Makefile clean</cleanCommand>
           <executablePath>CMakeFiles/CMakeDetermineCompilerABI_CXX.bin</executablePath>
+          <ccTool>
+            <incDir>
+              <pElem>.</pElem>
+              <pElem>../..</pElem>
+              <pElem>../../chaos-x86_64-dynamic-release/include</pElem>
+            </incDir>
+            <preprocessorList>
+              <Elem>CHAOS</Elem>
+              <Elem>NDEBUG</Elem>
+            </preprocessorList>
+          </ccTool>
         </makeTool>
       </makefileType>
       <item path="core/LibModBusWrap.cpp" ex="false" tool="1" flavor2="4">
-        <ccTool flags="2">
-          <incDir>
-            <pElem>.</pElem>
-            <pElem>../..</pElem>
-            <pElem>../../chaos-x86_64-dynamic-release/include</pElem>
-          </incDir>
-          <preprocessorList>
-            <Elem>CHAOS</Elem>
-            <Elem>NDEBUG</Elem>
-          </preprocessorList>
+        <ccTool flags="1">
         </ccTool>
       </item>
       <folder path="0/core">
@@ -74,36 +76,19 @@
       <folder path="0/models">
         <ccTool>
           <incDir>
-            <pElem>.</pElem>
-            <pElem>../..</pElem>
-            <pElem>..</pElem>
-            <pElem>../../chaos-x86_64-dynamic-release/include</pElem>
             <pElem>models/HAZEMEYER</pElem>
-            <pElem>models</pElem>
           </incDir>
           <preprocessorList>
-            <Elem>CHAOS</Elem>
             <Elem>HAZEMEYER_DEBUG</Elem>
-            <Elem>NDEBUG</Elem>
-          </preprocessorList>
-        </ccTool>
-      </folder>
-      <folder path="0/test">
-        <ccTool>
-          <incDir>
-            <pElem>.</pElem>
-            <pElem>../..</pElem>
-            <pElem>../../chaos-x86_64-dynamic-release/include</pElem>
-          </incDir>
-          <preprocessorList>
-            <Elem>BOOST_ALL_DYN_LINK</Elem>
-            <Elem>CHAOS</Elem>
-            <Elem>NDEBUG</Elem>
           </preprocessorList>
         </ccTool>
       </folder>
       <item path="models/HAZEMEYER/HazemeyerLib.cpp" ex="false" tool="1" flavor2="0">
-        <ccTool flags="1">
+        <ccTool flags="0">
+        </ccTool>
+      </item>
+      <item path="models/HAZEMEYER/provalo.cpp" ex="false" tool="1" flavor2="0">
+        <ccTool flags="0">
         </ccTool>
       </item>
       <item path="test/main.cpp" ex="false" tool="1" flavor2="4">
