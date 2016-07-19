@@ -3,6 +3,7 @@ project(common_modbus)
 IF (DEFINED ENV{CHAOS_BUNDLE} )
   include($ENV{CHAOS_BUNDLE}/tools/project_template/CMakeChaos.txt)
 ELSE()
+
   MESSAGE(STATUS "STANDALONE, environment CHAOS_BUNDLE defined")
   IF (NOT CMAKE_INSTALL_PREFIX) 
     MESSAGE(fatal "you must add -DCMAKE_INSTALL_PREFIX=<dir>")
@@ -24,69 +25,10 @@ endif()
 find_library(MODBUSLIB modbus PATHS ${PROJECT_SOURCE_DIR}/usr/local/lib ${CMAKE_INSTALL_PREFIX}/lib /usr/lib,/usr/local/lib/modbus DOC "modbus library")
 
 if(NOT MODBUSLIB)
-  message(STATUS "installing lib modbus")
-  file(REMOVE_RECURSE external)
-  file(MAKE_DIRECTORY external)
-  message(STATUS "cloning modubus")
-  execute_process( 
-    COMMAND git clone https://github.com/stephane/libmodbus.git 
-    WORKING_DIRECTORY external
-    RESULT_VARIABLE modbus_err
-    OUTPUT_VARIABLE out_mod
-    )
-  if( modbus_err)
-    message(FATAL_ERROR "cloning ${out_mod} ${modbus_err}")
-  endif()
+  GitClone(libmodbus)
+  GitCheckout(libmodbus v3.0.5)
+  ConfigureAndBuild(libmodbus "--enable-static --with-pic")
 
-  execute_process( 
-    COMMAND 	git checkout v3.0.5
-    WORKING_DIRECTORY external/libmodbus
-    RESULT_VARIABLE modbus_err
-    OUTPUT_VARIABLE out_mod
-    )
-  if( modbus_err)
-    message(FATAL_ERROR "cloning ${out_mod} ${modbus_err}")
-  endif()
-
-  message(STATUS "configuring(1) modbus")
-  execute_process( 
-    COMMAND ./autogen.sh
-    WORKING_DIRECTORY external/libmodbus
-    RESULT_VARIABLE modbus_err
-    OUTPUT_VARIABLE out_mod
-    )
-
-  if( modbus_err)
-    message(FATAL_ERROR "configuring ${out_mod}")
-  endif()
-
-  message(STATUS "configuring")
-  execute_process( 
-    COMMAND ./configure --enable-static --prefix=${CMAKE_INSTALL_PREFIX} ${CROSS}
-    WORKING_DIRECTORY external/libmodbus
-    RESULT_VARIABLE modbus_err
-    OUTPUT_VARIABLE out_mod
-    )
-
-  if( modbus_err)
-    message(FATAL_ERROR "configuring ${out_mod}")
-  endif()
-
-  message(STATUS "compiling")
-  execute_process( 
-    COMMAND make install
-    WORKING_DIRECTORY external/libmodbus
-    RESULT_VARIABLE modbus_err
-    OUTPUT_VARIABLE out_mod
-    )
-
-  if( modbus_err)
-    message(FATAL_ERROR "compiling ${out_mod}")
-  endif()
-
-
-else()
-  message(STATUS "using ${out_mod}")
 endif()
 
 
