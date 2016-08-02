@@ -1,6 +1,6 @@
 cmake_minimum_required(VERSION 2.8)
 project(common_modbus)
-
+ADD_DEFINITIONS(-fPIC)
 
 CheckConfigureBuild(modbus libmodbus:v3.0.5 "--enable-static;--with-pic" https://github.com/amichelotti)
 
