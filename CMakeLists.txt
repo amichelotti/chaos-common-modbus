@@ -15,11 +15,8 @@ ELSE()
 SET(libs pthread boost_regex boost_system)
 ENDIF()
 
-IF(BUILD_FORCE_STATIC)
 ADD_LIBRARY(${PROJECT_NAME} STATIC ${modbus_src})
-ELSE()
-ADD_LIBRARY(${PROJECT_NAME} SHARED ${modbus_src})
-ENDIF()
+
 
 
 
