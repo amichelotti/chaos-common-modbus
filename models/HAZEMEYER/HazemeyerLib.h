@@ -1,6 +1,6 @@
 #include <cstring>
 #include <vector>
-#include <malloc.h>
+#include <stdlib.h>
 
 #ifdef HAZEMEYER_DEBUG
 #define DEBUG
