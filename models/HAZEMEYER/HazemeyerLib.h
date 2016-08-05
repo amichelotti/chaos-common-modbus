@@ -153,8 +153,8 @@ namespace Hazemeyer
         bool Connect();
         bool CloseConnection();
         void ScreenMenu();
-        bool setModbusWriteTimeout(uint32_t usec) {this->modbus_drv->set_write_timeo(usec);}
-        bool setModbusReadTimeout(uint32_t usec) {this->modbus_drv->set_read_timeo(usec);}
+        bool setModbusWriteTimeout(uint32_t usec) {this->modbus_drv->set_write_timeo(usec); return true;}
+        bool setModbusReadTimeout(uint32_t usec) {this->modbus_drv->set_read_timeo(usec); return true;}
         Hazemeyer::ConnectStatus::ConnectStatus getConnectionStatus();
         bool ReadBitRegister(Hazemeyer::Corrector::ReadReg address,  int16_t* data);
         bool TurnOnMainUnit() {
@@ -183,7 +183,7 @@ namespace Hazemeyer
         uint16_t bits;
         uint16_t stopBits;
         Hazemeyer::ConnectStatus::ConnectStatus connectionStatus;
-        ::common::modbus::AbstractModbus* modbus_drv=NULL;
+        ::common::modbus::AbstractModbus* modbus_drv;
         int slave;
         bool WriteRegister(Hazemeyer::Corrector::WriteReg address, int16_t data);
         void ScreenSetChanCurrent();
