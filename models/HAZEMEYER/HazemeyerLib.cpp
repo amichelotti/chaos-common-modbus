@@ -17,6 +17,7 @@ Corrector::Corrector( const char* SerialParameters2){
     char* tmp=NULL;
     char* SerialParameters=strdup(SerialParameters2);
     char lwPar;
+    modbus_drv=NULL;
     try
     {
         tmp=strtok(SerialParameters,",");
@@ -87,7 +88,10 @@ Corrector::Corrector(){
 };
 
 Corrector::~Corrector(){
+  if(modbus_drv){
     delete (this->modbus_drv);
+    modbus_drv=NULL;
+  }
 
 };
 bool Corrector::Connect(){

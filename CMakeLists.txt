@@ -1,36 +1,8 @@
-cmake_minimum_required(VERSION 2.6)
+cmake_minimum_required(VERSION 2.8)
 project(common_modbus)
-IF (DEFINED ENV{CHAOS_BUNDLE} )
-  include($ENV{CHAOS_BUNDLE}/tools/project_template/CMakeChaos.txt)
-ELSE()
+ADD_DEFINITIONS(-fPIC)
 
-  MESSAGE(STATUS "STANDALONE, environment CHAOS_BUNDLE defined")
-  IF (NOT CMAKE_INSTALL_PREFIX) 
-    MESSAGE(fatal "you must add -DCMAKE_INSTALL_PREFIX=<dir>")
-  ELSE()
-    MESSAGE(STATUS "install prefix ${CMAKE_INSTALL_PREFIX}")
-  ENDIF()
-  INCLUDE_DIRECTORIES(. ../.. ${CMAKE_INSTALL_PREFIX}/include)
-  LINK_DIRECTORIES(${CMAKE_BINARY_DIR}/build ${CMAKE_INSTALL_PREFIX}/lib)
-ENDIF()
-
-if(DEFINED ENV{CHAOS_CROSS_HOST})
-SET(CROSS "--host=$ENV{CHAOS_CROSS_HOST}")
-message(status "CROSS host configure params:${CHAOS_CROSS_HOST}")
-else()
-SET(CROSS "")
-endif()
-
-
-find_library(MODBUSLIB modbus PATHS ${PROJECT_SOURCE_DIR}/usr/local/lib ${CMAKE_INSTALL_PREFIX}/lib /usr/lib,/usr/local/lib/modbus DOC "modbus library")
-
-if(NOT MODBUSLIB)
-  GitClone(libmodbus)
-  GitCheckout(libmodbus v3.0.5)
-  ConfigureAndBuild(libmodbus "--enable-static --with-pic")
-
-endif()
-
+CheckConfigureBuild(modbus libmodbus:v3.0.5 "--enable-static;--with-pic" https://github.com/amichelotti)
 
 find_library(MODBUSLIB NAMES libmodbus.a PATHS ${CMAKE_INSTALL_PREFIX}/lib)
 #### put your libcommon_modbus LIBRARY source
@@ -43,11 +15,8 @@ ELSE()
 SET(libs pthread boost_regex boost_system)
 ENDIF()
 
-IF(BUILD_FORCE_STATIC)
 ADD_LIBRARY(${PROJECT_NAME} STATIC ${modbus_src})
-ELSE()
-ADD_LIBRARY(${PROJECT_NAME} SHARED ${modbus_src})
-ENDIF()
+
 
 
 
