@@ -1,6 +1,10 @@
 #include <cstring>
 #include <vector>
-#include <malloc.h>
+#include <stdlib.h>
+
+#ifdef HAZEMEYER_DEBUG
+#define DEBUG
+#endif
 #include <common/modbus/ModBus.h>
 using namespace std;
 extern "C"
@@ -149,10 +153,10 @@ namespace Hazemeyer
         bool Connect();
         bool CloseConnection();
         void ScreenMenu();
-        bool setModbusWriteTimeout(uint32_t usec) {this->modbus_drv->set_write_timeo(usec);}
-        bool setModbusReadTimeout(uint32_t usec) {this->modbus_drv->set_read_timeo(usec);}
+        bool setModbusWriteTimeout(uint32_t usec) {this->modbus_drv->set_write_timeo(usec); return true;}
+        bool setModbusReadTimeout(uint32_t usec) {this->modbus_drv->set_read_timeo(usec); return true;}
         Hazemeyer::ConnectStatus::ConnectStatus getConnectionStatus();
-        bool ReadBitRegister(Hazemeyer::Corrector::ReadReg address,  short int* data);
+        bool ReadBitRegister(Hazemeyer::Corrector::ReadReg address,  int16_t* data);
         bool TurnOnMainUnit() {
                     return this->WriteRegister(Corrector::GENERAL_COMMANDS,0x2);
                     };
@@ -176,12 +180,12 @@ namespace Hazemeyer
         std::string SerialDev;
         int baudRate;
         char parity;
-        short int bits;
-        short int stopBits;
+        uint16_t bits;
+        uint16_t stopBits;
         Hazemeyer::ConnectStatus::ConnectStatus connectionStatus;
-        ::common::modbus::AbstractModbus* modbus_drv=NULL;
+        ::common::modbus::AbstractModbus* modbus_drv;
         int slave;
-        bool WriteRegister(Hazemeyer::Corrector::WriteReg address, short int data);
+        bool WriteRegister(Hazemeyer::Corrector::WriteReg address, int16_t data);
         void ScreenSetChanCurrent();
         void ScreenMainCommands();
         void ScreenChannelCommands();

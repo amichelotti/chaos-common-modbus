@@ -22,7 +22,7 @@ int main(int argc, char** argv) {
     if(CORRETTORE.Connect())
     {
         bool ret;
-        short int read=0;
+        int16_t read=0;
         cout << "connection established" << endl;
         cout << "stato connessione " << CORRETTORE.getConnectionStatus() <<endl;
         CORRETTORE.ScreenMenu();
