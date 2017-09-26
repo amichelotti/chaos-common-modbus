@@ -8,6 +8,8 @@
 
 #ifndef __CHAOS_AbstractModbus__
 #define __CHAOS_AbstractModbus__
+#include <boost/shared_ptr.hpp>
+#include <common/misc/driver/AbstractChannel.h>
 
 #include <iostream>
 #include <stdint.h>
@@ -21,18 +23,16 @@ namespace common {
             // follow additional data specific to each controller
         } report_slave_header_t;
         
-        class AbstractModbus {
+        class AbstractModbus:public ::common::misc::driver::AbstractChannel {
             
         public:
-            AbstractModbus(){};
+            AbstractModbus():AbstractChannel(){}
+
+            AbstractModbus(const std::string& uid_):AbstractChannel(uid_){}
             virtual ~AbstractModbus(){};
             
             /**
-             initialization connection parameters
-             @param 
-             */
-            virtual int init(std::string)=0;
-            /**
+
              connect to a target modbus device
              @return true on success
              */
@@ -232,8 +232,9 @@ namespace common {
             virtual int write_and_read_registers(int waddr,int wnb,uint16_t*src,int raddr,int rnb,uint16_t*dest,int slave_id=-1)=0;
 
             
-
         };
+	    typedef boost::shared_ptr<AbstractModbus> AbstractModbusChannel_psh;
+
     };
 };
 #endif 
