@@ -24,16 +24,21 @@ namespace common{
         private:
 
             modbus_t *ctx;
+
+            int baudrate,parity,bits,stop;
+            std::string ip;
+            int port;
+            int init(const std::string& ip_port);
+            int init(const char* serialdev,int baudrate,int parity,int bits,int stop);
         public:
-            LibModBusWrap(){ctx=0;}
+
             // tcp
-            LibModBusWrap(const char* ip,int port);
+            LibModBusWrap(const std::string& ip_port);
             //serial
-            LibModBusWrap(const char* serial,int baudrate,char parity,int bits,int stop);
+            LibModBusWrap(const char* serial,int baudrate,int parity,int bits,int stop);
             ~LibModBusWrap();
-            int init(const char* ip,int port);
-            int init(const char* serialdev,int baudrate,char parity,int bits,int stop);
-            int init(std::string initialization);
+
+            int init();
             int deinit();
             bool connect(void);
             int flush(void);

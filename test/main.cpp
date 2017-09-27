@@ -9,7 +9,7 @@
 #include <iostream>
 #include <boost/program_options.hpp>
 #include <boost/regex.hpp>
-#include <common/modbus/ModBus.h>
+#include <common/modbus/core/ModbusChannelFactory.h>
 #include <string>
 #include <iostream>
 #include <string.h>
@@ -43,7 +43,8 @@ int main(int argc, const char * argv[])
     boost::program_options::variables_map vm;
     boost::program_options::store(boost::program_options::parse_command_line(argc,argv, desc),vm);
     boost::program_options::notify(vm);
-    common::modbus::AbstractModbus* modbus_drv=NULL;
+    //common::modbus::AbstractModbus* modbus_drv=NULL;
+    common::modbus::AbstractModbusChannel_psh modbus_drv;
     std::string parameters;
     boost::smatch match;
     int modbusrtu=0;
@@ -67,14 +68,14 @@ int main(int argc, const char * argv[])
     if(regex_match(parameters,match,litteral_ip_port)){
         std::string ip = match[1];
         std::string port = match[2];
-        modbus_drv= new common::modbus::ModBusTcp(ip.c_str(),atoi(port.c_str()));
+        modbus_drv= ::common::modbus::ModbusChannelFactory::getChannel(ip,atoi(port.c_str()));
     } else if(regex_match(parameters,match,serial_parameter)) {
         std::string serial_dev= match[1];
         std::string baudrate=match[2];
         std::string parity = match[3];
         std::string bits = match[4];
         std::string stop = match[5];
-        modbus_drv = new common::modbus::ModBusRTU(serial_dev.c_str(),atoi(baudrate.c_str()),parity.c_str()[0],atoi(bits.c_str()),atoi(stop.c_str()));
+        modbus_drv = ::common::modbus::ModbusChannelFactory::getChannel(serial_dev.c_str(),atoi(baudrate.c_str()),atoi(parity.c_str()),atoi(bits.c_str()),atoi(stop.c_str()));
         modbusrtu=1;
     }
     
@@ -139,7 +140,6 @@ int main(int argc, const char * argv[])
         }
     }
     modbus_drv->close();
-    delete modbus_drv;
     // insert code here...
     return 0;
 }
