@@ -10,7 +10,7 @@ find_library(MODBUSLIB NAMES libmodbus.a PATHS ${CMAKE_INSTALL_PREFIX}/lib)
 FILE(GLOB modbus_src core/*.cpp)
 ###
 IF(FrameworkLib)
-SET(libs ${FrameworkLib})
+SET(libs chaos_common ${FrameworkLib})
 ELSE()
 SET(libs pthread boost_regex boost_system)
 ENDIF()
@@ -19,9 +19,8 @@ ADD_LIBRARY(${PROJECT_NAME} STATIC ${modbus_src})
 
 
 
-
 # set_target_properties(common_modbus_static PROPERTIES output_name common_modbus)
-TARGET_LINK_LIBRARIES(${PROJECT_NAME} ${MODBUSLIB}  ${libs})
+TARGET_LINK_LIBRARIES(${PROJECT_NAME} ${MODBUSLIB} ${libs})
 
 ## gets all sources in test, a main function must be present
 FILE(GLOB modbus_test_src test/*.cpp)
