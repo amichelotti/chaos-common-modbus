@@ -46,8 +46,8 @@ AbstractModbusChannel_psh ModbusChannelFactory::getChannel(const chaos::common::
 	}
 }
 #else
-AbstractModbusChannel_psh ModbusChannelFactory::getChannelFromJson(const std::string& json)  throw (std::logic_error::logic_error){
-	throw std::logic_error::logic_error("not implemented");
+AbstractModbusChannel_psh ModbusChannelFactory::getChannelFromJson(const std::string& json)  throw (std::logic_error){
+	throw std::logic_error("not implemented");
 
 }
 
