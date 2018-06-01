@@ -1,10 +1,10 @@
 cmake_minimum_required(VERSION 2.8)
 project(common_modbus)
 ADD_DEFINITIONS(-fPIC)
+find_package(chaos)
+include(${CMAKE_INSTALL_PREFIX}/CMakeMacroUtils.txt)
 find_package(Boost MODULE REQUIRED REQUIRED COMPONENTS program_options system)
-IF(NOT FrameworkLib)
-  include(${CMAKE_INSTALL_PREFIX}/CMakeMacroUtils.txt)
-ENDIF()
+
   CheckConfigureBuild(modbus libmodbus:v3.0.5 "--enable-static;--with-pic" https://github.com/amichelotti)
   find_library(MODBUSLIB NAMES libmodbus.a PATHS ${CMAKE_INSTALL_PREFIX}/lib)
 
