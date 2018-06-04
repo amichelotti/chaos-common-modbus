@@ -32,7 +32,7 @@ FILE(GLOB modbus_test_src test/*.cpp)
 ###
 ADD_EXECUTABLE(test_modbus ${modbus_test_src})
 
-TARGET_LINK_LIBRARIES(test_modbus ${MODBUSLIB} ${PROJECT_NAME} ${libs} -lboost_regex -lboost_program_options)
+TARGET_LINK_LIBRARIES(test_modbus ${MODBUSLIB} ${PROJECT_NAME} pthread -lboost_regex -lboost_program_options)
 
 INSTALL_TARGETS(/lib ${PROJECT_NAME})
 INSTALL_TARGETS(/bin/modbus test_modbus)
