@@ -3,9 +3,15 @@
 #include <stdlib.h>
 
 #ifdef HAZEMEYER_DEBUG
+#ifndef DEBUG
 #define DEBUG
 #endif
+#endif
 #include <common/modbus/ModBus.h>
+
+#ifdef CHAOS
+#include <common/misc/driver/ConfigDriverMacro.h>
+#endif
 using namespace std;
 extern "C"
 {
@@ -149,6 +155,9 @@ namespace Hazemeyer
         
         Corrector();
         Corrector(const char* SerialParameters);
+#ifdef CHAOS
+        Corrector (::common::modbus::AbstractModbusChannel_psh llchannel,const chaos::common::data::CDataWrapper* allJson);
+#endif
         ~Corrector();
         bool Connect();
         bool CloseConnection();
@@ -183,7 +192,8 @@ namespace Hazemeyer
         uint16_t bits;
         uint16_t stopBits;
         Hazemeyer::ConnectStatus::ConnectStatus connectionStatus;
-        ::common::modbus::AbstractModbus* modbus_drv;
+        ::common::modbus::AbstractModbusChannel_psh modbus_drv;
+        //::common::modbus::AbstractModbus* modbus_drv;
         int slave;
         bool WriteRegister(Hazemeyer::Corrector::WriteReg address, int16_t data);
         void ScreenSetChanCurrent();

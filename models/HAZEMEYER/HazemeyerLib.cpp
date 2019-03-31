@@ -1,23 +1,34 @@
 
 #include "HazemeyerLib.h"
 #include <common/debug/core/debug.h>
+#include <common/modbus/core/ModbusChannelFactory.h>
 using namespace Hazemeyer;
 extern "C"
 {
     int HZTest()
     {
       printf("Ciao questo è un test\n");
+     // ::common::modbus::AbstractModbusChannel_psh chMod;
+      //::common::modbus::AbstractModbus*  modAbs =new ::common::modbus::ModBusRTU;
+      //modAbs->
+      //chMod->
       return 0;
+    
     };
 }
-
+#ifdef CHAOS
+Corrector::Corrector(::common::modbus::AbstractModbusChannel_psh llchannel,const chaos::common::data::CDataWrapper* allJson)
+{
+    this->modbus_drv=llchannel;
+    this->connectionStatus=Hazemeyer::ConnectStatus::UNCONNECTED;
+}
+#endif
 
 Corrector::Corrector( const char* SerialParameters2){
     //la stringa viene scritta con ogni parametro separato da virgola
     char* tmp=NULL;
     char* SerialParameters=strdup(SerialParameters2);
     char lwPar;
-    modbus_drv=NULL;
     try
     {
         tmp=strtok(SerialParameters,",");
@@ -47,51 +58,52 @@ Corrector::Corrector( const char* SerialParameters2){
     {
         this->connectionStatus=Hazemeyer::ConnectStatus::UNDEFINED;
         DERR("## error while parsing parameters");
-        this->modbus_drv=NULL;
+        //this->modbus_drv=NULL;
         free(SerialParameters);
         return;
     }
-    //check consistence.
+    
     free(SerialParameters);
     
-    this->modbus_drv= new common::modbus::ModBusRTU(this->SerialDev.c_str(),this->baudRate,this->parity,
-            this->bits,this->stopBits);
+    int newParity;
+    switch (lwPar)
+    {
+        case 'n': newParity=0;break;
+        case 'e': newParity=1;break;
+        case 'o': newParity=2;break;
+        default : newParity=0;break;
     
-    
-     if(this->modbus_drv==NULL)
+    }
+    this->modbus_drv= ::common::modbus::ModbusChannelFactory::getChannel(this->SerialDev,this->baudRate,newParity,this->bits,this->stopBits,false);
+    this->connectionStatus=Hazemeyer::ConnectStatus::UNCONNECTED;
+  /*   if(this->modbus_drv==NULL)
      {
         DERR("## invalid parameters");
         this->connectionStatus=Hazemeyer::ConnectStatus::UNDEFINED;
         return;
      }
      else
-         this->connectionStatus=Hazemeyer::ConnectStatus::UNCONNECTED;
     
+    */
     //modbus_drv->set_read_timeo(5000000);
     //modbus_drv->set_write_timeo(5000000);
     
     
 };
 Corrector::Corrector(){
-    //this->Name="KKKK";
+    
     this->slave=2;
-    this->modbus_drv= new common::modbus::ModBusRTU("/dev/ttyr0f",9600,'N',8,1);
-     if(this->modbus_drv==NULL)
-     {
-        DERR("## invalid parameters");
-        this->connectionStatus=Hazemeyer::ConnectStatus::UNDEFINED;
-     }
-     else
-         this->connectionStatus=Hazemeyer::ConnectStatus::UNCONNECTED;
-  
+    this->modbus_drv= ::common::modbus::ModbusChannelFactory::getChannel("/dev/ttyr0f",9600,0,8,1,false);
+    this->connectionStatus=Hazemeyer::ConnectStatus::UNCONNECTED;
+    
 
 };
 
 Corrector::~Corrector(){
-  if(modbus_drv){
-    delete (this->modbus_drv);
-    modbus_drv=NULL;
-  }
+  //if(modbus_drv){
+    //delete (this->modbus_drv);
+    //modbus_drv=NULL;
+ // }
 
 };
 bool Corrector::Connect(){
