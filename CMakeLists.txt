@@ -1,10 +1,15 @@
 cmake_minimum_required(VERSION 2.8)
 project(common_modbus)
 ADD_DEFINITIONS(-fPIC)
+find_package(chaos)
+include(${CMAKE_INSTALL_PREFIX}/CMakeMacroUtils.txt)
+find_package(Boost MODULE REQUIRED REQUIRED COMPONENTS program_options system)
 
-CheckConfigureBuild(modbus libmodbus:v3.0.5 "--enable-static;--with-pic" https://github.com/amichelotti)
+  CheckConfigureBuild(modbus libmodbus:v3.0.5 "--enable-static;--with-pic" https://github.com/amichelotti)
+  find_library(MODBUSLIB NAMES libmodbus.a PATHS ${CMAKE_INSTALL_PREFIX}/lib)
 
-find_library(MODBUSLIB NAMES libmodbus.a PATHS ${CMAKE_INSTALL_PREFIX}/lib)
+include_directories(../../ ${Boost_INCLUDE_DIRS})
+link_directories(${CMAKE_INSTALL_PREFIX}/lib)
 #### put your libcommon_modbus LIBRARY source
 ### files in source
 FILE(GLOB modbus_src core/*.cpp)
@@ -25,12 +30,12 @@ TARGET_LINK_LIBRARIES(${PROJECT_NAME} ${MODBUSLIB} ${libs})
 ## gets all sources in test, a main function must be present
 FILE(GLOB modbus_test_src test/*.cpp)
 ###
-ADD_EXECUTABLE(test_modbus ${modbus_test_src})
+ ADD_EXECUTABLE(test_modbus ${modbus_test_src})
 
-TARGET_LINK_LIBRARIES(test_modbus ${MODBUSLIB} ${PROJECT_NAME} ${libs} -lboost_regex -lboost_program_options)
+ TARGET_LINK_LIBRARIES(test_modbus ${MODBUSLIB} ${PROJECT_NAME} pthread -lboost_regex -lboost_program_options)
 
 INSTALL_TARGETS(/lib ${PROJECT_NAME})
-INSTALL_TARGETS(/bin test_modbus)
+INSTALL_TARGETS(/bin/modbus test_modbus)
 FILE(GLOB headers "core/*.h")
 INSTALL(FILES ModBus.h DESTINATION include/common/modbus)
 INSTALL(FILES ${headers} DESTINATION include/common/modbus/core)

@@ -26,6 +26,7 @@ AbstractModbusChannel_psh ModbusChannelFactory::getChannelFromJson(const std::st
 	}
 }
 AbstractModbusChannel_psh ModbusChannelFactory::getChannel(const chaos::common::data::CDataWrapper& json )  throw(chaos::CException) {
+	AbstractModbusChannel_psh ret;
 	GET_PARAMETER_TREE((&json),channel){
 		GET_PARAMETER_DO(channel,serdev,string,0){
 			//serial channel
@@ -44,10 +45,11 @@ AbstractModbusChannel_psh ModbusChannelFactory::getChannel(const chaos::common::
 
 		}
 	}
+	return ret;
 }
 #else
-AbstractModbusChannel_psh ModbusChannelFactory::getChannelFromJson(const std::string& json)  throw (std::logic_error::logic_error){
-	throw std::logic_error::logic_error("not implemented");
+AbstractModbusChannel_psh ModbusChannelFactory::getChannelFromJson(const std::string& json)  throw (std::logic_error){
+	throw std::logic_error("not implemented");
 
 }
 
