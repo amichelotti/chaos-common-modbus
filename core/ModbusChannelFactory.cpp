@@ -14,6 +14,7 @@ namespace common {
 namespace modbus {
 
 std::map<std::string,AbstractModbusChannel_psh> ModbusChannelFactory::unique_channels;
+boost::mutex ModbusChannelFactory::chanmutex;
 #ifdef CHAOS
 using namespace chaos::common::data;
 AbstractModbusChannel_psh ModbusChannelFactory::getChannelFromJson(const std::string& json)  throw (std::logic_error){
@@ -56,7 +57,7 @@ AbstractModbusChannel_psh ModbusChannelFactory::getChannelFromJson(const std::st
 #endif
 
 AbstractModbusChannel_psh ModbusChannelFactory::getChannel(std::string serial_dev,int baudrate,int parity,int bits,int stop,bool hwctrl){
-	boost::mutex::scoped_lock(chanmutex);
+	boost::mutex::scoped_lock l(chanmutex);
 	std::map<std::string,AbstractModbusChannel_psh>::iterator i=unique_channels.find(serial_dev);
 	if(i!=unique_channels.end()){
 		DPRINT("retrieving SERIAL channel '%s' @%p in use count %ld",serial_dev.c_str(),i->second.get(),i->second.use_count());
@@ -75,7 +76,7 @@ AbstractModbusChannel_psh ModbusChannelFactory::getChannel(const std::string& ip
 	std::stringstream ss;
 	ss<<ip<<":"<<port;
 
-	boost::mutex::scoped_lock(chanmutex);
+	boost::mutex::scoped_lock l(chanmutex);
 	std::map<std::string,AbstractModbusChannel_psh>::iterator i=unique_channels.find(ss.str());
 	if(i!=unique_channels.end()){
 		DPRINT("retrieving TCP channel '%s' @%p in use count %ld",ss.str().c_str(),i->second.get(),i->second.use_count());
@@ -89,7 +90,7 @@ AbstractModbusChannel_psh ModbusChannelFactory::getChannel(const std::string& ip
 }
 
 void ModbusChannelFactory::removeChannel(const std::string& uid){
-	boost::mutex::scoped_lock(chanmutex);
+	boost::mutex::scoped_lock l(chanmutex);
 
 	std::map<std::string,AbstractModbusChannel_psh>::iterator i=unique_channels.find(uid);
 	if(i!=unique_channels.end()){
