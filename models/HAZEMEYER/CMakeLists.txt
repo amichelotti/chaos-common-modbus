@@ -18,7 +18,7 @@ FILE(GLOB modbus_test_src provalo.cpp)
 ###
  ADD_EXECUTABLE(test_hazemeyer ${modbus_test_src})
  TARGET_LINK_LIBRARIES(test_hazemeyer ${MODBUSLIB} common_modbus common_debug HZLib ${libs} boost_regex boost_program_options)
-INSTALL_TARGETS(/lib HZLib)
+
 INSTALL(TARGETS HZLib
         DESTINATION "lib"
         PERMISSIONS OWNER_WRITE OWNER_READ OWNER_EXECUTE GROUP_READ GROUP_WRITE GROUP_EXECUTE WORLD_READ WORLD_EXECUTE)
