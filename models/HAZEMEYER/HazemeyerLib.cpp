@@ -355,8 +355,8 @@ void Corrector::ScreenMenu(){
                     
             default:  return;
         }
-      cout << "Press any key to continue" << endl;
-      scanf("%*c%*c");
+    //  cout << "Press any key to continue" << endl;
+    //  scanf("%*c%*c");
     }
 }
 bool Corrector::ReadChannelCurrent(unsigned int channel, double *data){
