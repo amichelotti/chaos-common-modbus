@@ -23,11 +23,12 @@ static const boost::regex serial_parameter("([\\w\\/]+):([0-9]+):([ENO]):([78]):
 using namespace std;
 
 unsigned long int getData(const char*what){
-    unsigned long int data;
+    unsigned long int data=0;
     char sdata[128];
     printf("%s:",what);
-    scanf("%s",sdata);
-    data = strtoul(sdata,0,0);
+    if(scanf("%s",sdata)==1){
+        data = strtoul(sdata,0,0);
+    }
     printf("\n");
     return data;
 }
