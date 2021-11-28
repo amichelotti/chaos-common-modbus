@@ -24,7 +24,7 @@ namespace modbus {
 
 class ModbusChannelFactory {
 	static std::map<std::string,AbstractModbusChannel_psh> unique_channels;
-	static boost::mutex chanmutex;
+	static ChaosMutex chanmutex;
 public:
 	ModbusChannelFactory();
 	virtual ~ModbusChannelFactory();
