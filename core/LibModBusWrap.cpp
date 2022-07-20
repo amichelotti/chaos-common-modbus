@@ -72,7 +72,7 @@ int LibModBusWrap::init(const char* serialdev,int baudrate,int parity,int bits,i
 
 int LibModBusWrap::init(){
 	if(ctx){
-		DERR("## you shoud deinitialize before initialize");
+		DERR("Already initialized, you shoud deinitialize before initialize");
 		return -4;
 	}
 
