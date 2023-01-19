@@ -26,7 +26,7 @@ AbstractModbusChannel_psh ModbusChannelFactory::getChannelFromJson(const std::st
 		throw std::logic_error("bad json");
 	}
 }
-AbstractModbusChannel_psh ModbusChannelFactory::getChannel(const chaos::common::data::CDataWrapper& json )  throw(chaos::CException) {
+AbstractModbusChannel_psh ModbusChannelFactory::getChannel(const chaos::common::data::CDataWrapper& json )   {
 	AbstractModbusChannel_psh ret;
 	GET_PARAMETER_TREE((&json),channel){
 		GET_PARAMETER_DO(channel,serdev,string,0){

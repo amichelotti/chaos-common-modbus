@@ -33,7 +33,7 @@ public:
 	//retrieve a tcp channel
 	static AbstractModbusChannel_psh getChannel(const std::string& ip, int port );
 #ifdef CHAOS
-	static AbstractModbusChannel_psh getChannel(const chaos::common::data::CDataWrapper& config)  throw (chaos::CException);
+	static AbstractModbusChannel_psh getChannel(const chaos::common::data::CDataWrapper& config)  ;
 #endif
 	static AbstractModbusChannel_psh getChannelFromJson(const std::string& json)  throw (std::logic_error);
 	static void removeChannel(const std::string& uid);
