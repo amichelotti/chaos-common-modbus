@@ -17,7 +17,7 @@ std::map<std::string,AbstractModbusChannel_psh> ModbusChannelFactory::unique_cha
 ChaosMutex ModbusChannelFactory::chanmutex;
 #ifdef CHAOS
 using namespace chaos::common::data;
-AbstractModbusChannel_psh ModbusChannelFactory::getChannelFromJson(const std::string& json)  throw (std::logic_error){
+AbstractModbusChannel_psh ModbusChannelFactory::getChannelFromJson(const std::string& json)  {
 	try{
 		chaos::common::data::CDataWrapper data;
 		data.setSerializedJsonData(json.c_str());
@@ -49,7 +49,7 @@ AbstractModbusChannel_psh ModbusChannelFactory::getChannel(const chaos::common::
 	return ret;
 }
 #else
-AbstractModbusChannel_psh ModbusChannelFactory::getChannelFromJson(const std::string& json)  throw (std::logic_error){
+AbstractModbusChannel_psh ModbusChannelFactory::getChannelFromJson(const std::string& json)  {
 	throw std::logic_error("not implemented");
 
 }

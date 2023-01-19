@@ -35,7 +35,7 @@ public:
 #ifdef CHAOS
 	static AbstractModbusChannel_psh getChannel(const chaos::common::data::CDataWrapper& config)  ;
 #endif
-	static AbstractModbusChannel_psh getChannelFromJson(const std::string& json)  throw (std::logic_error);
+	static AbstractModbusChannel_psh getChannelFromJson(const std::string& json)  ;
 	static void removeChannel(const std::string& uid);
 	static void removeChannel(AbstractModbusChannel_psh& ch);
 
