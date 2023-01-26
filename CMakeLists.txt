@@ -17,7 +17,7 @@ FILE(GLOB modbus_src core/*.cpp)
 IF(FrameworkLib)
 SET(libs chaos_common ${FrameworkLib})
 ELSE()
-SET(libs pthread boost_regex boost_system)
+SET(libs pthread boost_system)
 ENDIF()
 
 ADD_LIBRARY(${PROJECT_NAME} STATIC ${modbus_src})
@@ -32,7 +32,7 @@ FILE(GLOB modbus_test_src test/*.cpp)
 ###
  ADD_EXECUTABLE(test_modbus ${modbus_test_src})
 
- TARGET_LINK_LIBRARIES(test_modbus ${MODBUSLIB} ${PROJECT_NAME} pthread -lboost_regex -lboost_program_options)
+ TARGET_LINK_LIBRARIES(test_modbus ${MODBUSLIB} ${PROJECT_NAME} pthread -lboost_program_options)
 
 #INSTALL_TARGETS(/lib ${PROJECT_NAME})
 INSTALL(TARGETS ${PROJECT_NAME}

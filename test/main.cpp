@@ -8,16 +8,16 @@
 
 #include <iostream>
 #include <boost/program_options.hpp>
-#include <boost/regex.hpp>
+#include <regex>
 #include <common/modbus/core/ModbusChannelFactory.h>
 #include <string>
 #include <iostream>
 #include <string.h>
 #include <stdlib.h>
 
-static const boost::regex litteral_ip_port("([0-9a-zA-Z]+\\.[0-9a-zA-Z]+\\.[0-9a-zA-Z]+\\.[0-9a-zA-Z]+):([0-9]+)");
+static const std::regex litteral_ip_port("([0-9a-zA-Z]+\\.[0-9a-zA-Z]+\\.[0-9a-zA-Z]+\\.[0-9a-zA-Z]+):([0-9]+)");
 // serial_device,baudrate,parity,bits,stop
-static const boost::regex serial_parameter("([\\w\\/]+):([0-9]+):([ENO]):([78]):([01])");
+static const std::regex serial_parameter("([\\w\\/]+):([0-9]+):([ENO]):([78]):([01])");
 #define USAGE \
  std::cout<<"Usage:"<<argv[0]<<" --mc <communication channel [ip:port or /dev/ttySxx:baudrate:parity:bits:stop]>"<<std::endl;
 using namespace std;
@@ -47,7 +47,7 @@ int main(int argc, const char * argv[])
     //common::modbus::AbstractModbus* modbus_drv=NULL;
     common::modbus::AbstractModbusChannel_psh modbus_drv;
     std::string parameters;
-    boost::smatch match;
+    std::smatch match;
     int modbusrtu=0;
     std::cout << "Hello!" << std::endl;
     if(vm.count("help")){
