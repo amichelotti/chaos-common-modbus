@@ -10,11 +10,11 @@
 #include <stdio.h>
 #include <errno.h>
 #include <string>
-#include <boost/regex.hpp>
+#include <regex>
 #include <boost/algorithm/string.hpp>
 #include <common/debug/core/debug.h>
-static const boost::regex modbusTcp("(.+):(.+)");
-static const boost::regex modbusRTU("([\\w\\/]+):([0-9]+):([ENO]):([78]):([01])");
+static const std::regex modbusTcp("(.+):(.+)");
+static const std::regex modbusRTU("([\\w\\/]+):([0-9]+):([ENO]):([78]):([01])");
 
 // tcp
 namespace common {
