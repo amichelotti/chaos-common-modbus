@@ -11,7 +11,8 @@
 #include <errno.h>
 #include <string>
 #include <regex>
-#include <boost/algorithm/string.hpp>
+//#include <boost/algorithm/string.hpp>
+#include <chaos/common/ChaosCommon.h>
 #include <common/debug/core/debug.h>
 static const std::regex modbusTcp("(.+):(.+)");
 static const std::regex modbusRTU("([\\w\\/]+):([0-9]+):([ENO]):([78]):([01])");
@@ -34,7 +35,8 @@ LibModBusWrap::LibModBusWrap(const char* serial,int _baudrate,int _parity,int _b
 }
 int LibModBusWrap::init(const std::string& ip_port) {
 	std::vector<std::string> strs;
-	boost::split(strs, ip_port, boost::is_any_of(":"));
+	//boost::split(strs, ip_port, boost::is_any_of(":"));
+	strs=chaos::split(ip_port,":");
 	if(strs.size()!=2){
 		throw std::logic_error("bad IP:port specification");
 	}
